@@ -363,7 +363,6 @@ if page == "L1 Network Activities":
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
 
-    plt.figure(figsize=(12,5))
     d = d.dropna()
     index = d['blocktime']
 
