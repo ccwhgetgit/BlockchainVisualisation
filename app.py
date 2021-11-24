@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 
-from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import numpy as np
@@ -8,7 +7,7 @@ import streamlit as st
 import base64
 import pandas as pd
 import time
-import matplotlib.pyplot as plt
+
 from datetime import date
 from io import BytesIO
 
