@@ -119,7 +119,7 @@ if page == "L1/L2 Network Activities":
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
     st.write("Today's date: " + str(date.today()) )
     history = date.today() - pd.DateOffset(months=3)
-    st.write("Dataset follows a 3 month window" )
+    st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers**" )
     history = str(history)[:10]
     url = "https://snowtrace.io/chart/tx"
 
