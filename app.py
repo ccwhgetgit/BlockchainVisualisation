@@ -376,9 +376,10 @@ if page == "L1/L2 Network Activities":
             d.loc[count, 'algorandnewaddress'] = int(sa) - before
             before = int(sa)
         count += 1
-"""
-    # polyscan
+    """
 
+
+    # polyscan
     url = "https://polygonscan.com/chart/tx"
 
     # Make a GET request to fetch the raw HTML content
