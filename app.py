@@ -406,7 +406,7 @@ if page == "L1/L2 Network Activities":
     count = 0
     total = 0
 
-    for i in range(len(a)):
+    for i in range(14, len(a)):
         if a[i] == 'newaddress':
             b = a[i + 2]
             c = list(b)
