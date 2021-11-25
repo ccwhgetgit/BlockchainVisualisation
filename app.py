@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 
+from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import numpy as np
@@ -7,11 +8,12 @@ import streamlit as st
 import base64
 import pandas as pd
 import time
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 from datetime import date
 from io import BytesIO
 
-page = st.selectbox("Choose your page", ["IMX", "L1 Network Activities", "OpenSea Rarity"])
+page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "IMX", "OpenSea Rarity"])
 if page == "IMX":
     url="https://imxflow.com"
     # Make a GET request to fetch the raw HTML content
@@ -109,10 +111,16 @@ if page == "IMX":
     number = str(len(d))
     st.write("Number of NFT Projects on IMX = " + number)
 
-if page == "L1 Network Activities":
-    st.title("Avalanche, Algorand, Fantom, Elrond Network")
+if page == "L1/L2 Network Activities":
+    st.title("Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum Network")
     st.write("Avalanche and Fantom has a 2 day delay in their explorer")
     st.write("Algorand's explorer has to be updated 4 months later")
+    d = pd.DataFrame(
+        columns=['blocktime', 'polytxnactivity', 'polynewaddress', 4'arbitxnactivity',
+                 'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress', 'elrondtxnactivity',
+                 'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
+
+    options = st.multiselect(d.index)
     url = "https://snowtrace.io/chart/tx"
 
     # Make a GET request to fetch the raw HTML content
@@ -127,7 +135,6 @@ if page == "L1 Network Activities":
     a = a[start:end]
     a = a.split()
     # avalanche
-    d = pd.DataFrame(columns=['blocktime', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress', 'elrondtxnactivity', 'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
     count = 0
     total = 0
 
@@ -337,6 +344,101 @@ if page == "L1 Network Activities":
             before = int(sa)
         count += 1
 
+    # polyscan
+
+    url = "https://polygonscan.com/chart/tx"
+
+    # Make a GET request to fetch the raw HTML content
+    html_content = requests.get(url).text
+
+    # Parse the html content
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+
+    start = a.find('September 30, 2021')
+    end = a.find('Highcharts')
+
+    a = a[start:end].split()
+
+    count = 0
+    total = 0
+
+    for i in range(14, len(a)):
+        if a[i] == 'newaddress':
+            b = a[i + 2]
+            c = list(b)
+            sa = ""
+            for i in c:
+                if i.isdigit():
+                    sa += i
+            d.loc[count, 'polynewaddress'] = sa
+            count += 1
+
+    count = 0
+    b = ""
+    for i in range(len(a)):
+
+        if a[i] == 'formattedValue':
+            b = a[i + 2]
+            c = list(b)
+            sa = ""
+            for i in c:
+                if i.isdigit():
+                    sa += i
+            d.loc[count, 'polytxnactivity'] = int(sa)
+            count += 1
+    count = 0
+
+#arbiscan
+    url = "https://arbiscan.io/chart/tx"
+
+    # Make a GET request to fetch the raw HTML content
+    html_content = requests.get(url).text
+
+    # Make a GET request to fetch the raw HTML content
+    html_content = requests.get(url).text
+
+    # Parse the html content
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+
+    start = a.find('October 1, 2021')
+    end = a.find('Highcharts')
+
+    a = a[start:end].split()
+
+
+    count = 0
+    total = 0
+
+    for i in range(len(a)):
+        if a[i] == 'newaddress':
+            b = a[i + 2]
+            c = list(b)
+            sa = ""
+            for i in c:
+                if i.isdigit():
+                    sa += i
+            d.loc[count, 'arbinewaddress'] = sa
+            count += 1
+
+    count = 0
+    b = ""
+    for i in range(len(a)):
+
+        if a[i] == 'formattedValue':
+            b = a[i + 2]
+            c = list(b)
+            sa = ""
+            for i in c:
+                if i.isdigit():
+                    sa += i
+            d.loc[count, 'arbitxnactivity'] = int(sa)
+            count += 1
+    count = 0
+
+
+
     d
 
 
@@ -363,6 +465,7 @@ if page == "L1 Network Activities":
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
 
+    plt.figure(figsize=(12,5))
     d = d.dropna()
     index = d['blocktime']
 
