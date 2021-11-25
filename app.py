@@ -8,8 +8,6 @@ import base64
 import pandas as pd
 import time
 from datetime import date
-from io import BytesIO
-import matplotlib.pyplot as plt
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "IMX", "OpenSea Rarity"])
 if page == "IMX":
     url="https://imxflow.com"
@@ -461,8 +459,6 @@ if page == "L1/L2 Network Activities":
     df = d# your dataframe
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
-
-    plt.figure(figsize=(12,5))
     d = d.dropna()
     index = d['blocktime']
 
