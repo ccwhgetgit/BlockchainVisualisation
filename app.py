@@ -321,7 +321,9 @@ if page == "L1/L2 Network Activities":
     st.write(epoch)
     st.write(a)
     time = int(epoch) - 57600
+    st.write(time)
     start = a.find('"time-start":' + str(time))
+    
     a = a[start:].split("time")
     st.write(a)
     l = a[2][:]
