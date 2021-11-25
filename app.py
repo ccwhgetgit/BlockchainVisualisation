@@ -346,6 +346,7 @@ if page == "L1/L2 Network Activities":
 
     start = a.find('"time-start":' + str(time))
     a = a[start:].split("time")
+    """
     l = a[2][31:]
     for j in range(len(l)):
         if l[j].isdigit():
@@ -353,7 +354,8 @@ if page == "L1/L2 Network Activities":
         else:
             break
     initial = int(sa)
-
+    """
+    initial = 0 
     count = 1
     before = 0
     for i in range(4, len(a), 2):
