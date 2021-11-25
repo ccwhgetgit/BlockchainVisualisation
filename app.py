@@ -471,6 +471,19 @@ if page == "L1/L2 Network Activities":
     df = df.set_index(index)
     st.write("Daily Transaction Activity from 1 October 2021")
     st.line_chart(df)
+    
+    
+    st.write("Without Polygon")
+    df =d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
+    df = df.set_index(index)
+    st.write("New Daily Addresses from 1 October 2021")
+    st.line_chart(df)
+
+    df = d[['arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity','algorandtxnactivity']].dropna()
+    df = df.set_index(index)
+    st.write("Daily Transaction Activity from 1 October 2021")
+    st.line_chart(df)
+
 
 if page == "OpenSea Rarity":
 
