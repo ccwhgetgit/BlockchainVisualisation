@@ -397,16 +397,16 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
 
-    start = a.find('October 1, 2021')
+    
+    start = a.find('September 30, 2021')
     end = a.find('Highcharts')
-
     a = a[start:end].split()
 
 
     count = 0
     total = 0
 
-    for i in range(14, len(a)):
+    for i in range(14,len(a)):
         if a[i] == 'newaddress':
             b = a[i + 2]
             c = list(b)
