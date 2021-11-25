@@ -116,7 +116,7 @@ if page == "L1/L2 Network Activities":
     st.write("Avalanche and Fantom has a 2 day delay in their explorer")
     st.write("Algorand's explorer has to be updated 4 months later")
     d = pd.DataFrame(
-        columns=['blocktime', 'polytxnactivity', 'polynewaddress', 4'arbitxnactivity',
+        columns=['blocktime', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress', 'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
 
