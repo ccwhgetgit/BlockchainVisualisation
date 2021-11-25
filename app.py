@@ -7,6 +7,7 @@ import base64
 import pandas as pd
 import time
 from datetime import date
+from io import BytesIO
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "IMX", "OpenSea Rarity"])
 if page == "IMX":
     url="https://imxflow.com"
