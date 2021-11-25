@@ -462,12 +462,12 @@ if page == "L1/L2 Network Activities":
     d = d.dropna()
     index = d['blocktime']
 
-    df =d[['avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
+    df =d[['polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
     df = df.set_index(index)
     st.write("New Daily Addresses from 1 October 2021")
     st.line_chart(df)
 
-    df = d[['avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity','algorandtxnactivity']].dropna()
+    df = d[['polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity','algorandtxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Daily Transaction Activity from 1 October 2021")
     st.line_chart(df)
