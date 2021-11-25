@@ -320,7 +320,7 @@ if page == "L1/L2 Network Activities":
     time = int(epoch) - 57600
     start = a.find('"time-start":' + str(time))
     a = a[start:].split("time")
-    l = a[2][29:]
+    l = a[2][:]
     for j in range(len(l)):
         if l[j].isdigit():
             sa += l[j]
