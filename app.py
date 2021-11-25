@@ -346,7 +346,7 @@ if page == "L1/L2 Network Activities":
 
     start = a.find('"time-start":' + str(time))
     a = a[start:].split("time")
-    """
+    
     l = a[2][31:]
     for j in range(len(l)):
         if l[j].isdigit():
@@ -354,7 +354,7 @@ if page == "L1/L2 Network Activities":
         else:
             break
     initial = int(sa)
-    """
+    
     initial = 0 
     count = 1
     before = 0
@@ -498,24 +498,24 @@ if page == "L1/L2 Network Activities":
     index = d['blocktime']
 
     df = d[[ 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
-            'algorandnewaddress']].dropna()
+            ]].dropna()
     df = df.set_index(index)
     st.write("New Daily Addresses from " + hist)
     st.line_chart(df)
 
     df = d[['polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
-            'algorandtxnactivity']].dropna()
+            ]].dropna()
     df = df.set_index(index)
     st.write("Daily Transaction Activity from " + hist)
     st.line_chart(df)
 
     st.write("Without Polygon")
-    df = d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
+    df = d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', ]].dropna()
     df = df.set_index(index)
     st.write("New Daily Addresses from " + hist)
     st.line_chart(df)
 
-    df = d[['arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
+    df = d[['arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Daily Transaction Activity from " + hist)
     st.line_chart(df)
