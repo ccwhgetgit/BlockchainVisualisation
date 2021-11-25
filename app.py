@@ -117,7 +117,7 @@ if page == "L1/L2 Network Activities":
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress', 'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
 
-    options = st.multiselect(d.index)
+   
     url = "https://snowtrace.io/chart/tx"
 
     # Make a GET request to fetch the raw HTML content
