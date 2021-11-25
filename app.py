@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 
 from bs4 import BeautifulSoup
 import requests
@@ -8,8 +7,6 @@ import streamlit as st
 import base64
 import pandas as pd
 import time
-import matplotlib.pyplot as plt
-import seaborn as sns
 from datetime import date
 from io import BytesIO
 
