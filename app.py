@@ -7,10 +7,12 @@ import base64
 import pandas as pd
 import time
 from datetime import date
+import datetime
 from io import BytesIO
+
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "IMX", "OpenSea Rarity"])
 if page == "IMX":
-    url="https://imxflow.com"
+    url = "https://imxflow.com"
     # Make a GET request to fetch the raw HTML content
     html_content = requests.get(url).text
 
@@ -19,8 +21,8 @@ if page == "IMX":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
     df1 = html_content
-    a= df1.split()
-    d = pd.DataFrame(columns = ['project','minted', 'holders', 'NFTssold','total sales (USD)'])
+    a = df1.split()
+    d = pd.DataFrame(columns=['project', 'minted', 'holders', 'NFTssold', 'total sales (USD)'])
     count = 0
     total = 0
 
@@ -32,10 +34,10 @@ if page == "IMX":
                 if '</div><div' in a[j]:
                     title += a[j]
                     break
-            title =  title[19:]
+            title = title[19:]
             index = title.find('</div>')
-            d.loc[count, 'project']  = title[:index]
-            count +=1
+            d.loc[count, 'project'] = title[:index]
+            count += 1
     count = 0
 
     total = 0
@@ -44,15 +46,15 @@ if page == "IMX":
         title = ""
         total = 0
         if 'class="small_desc_label">Minted</div><div' in a[i]:
-            title =  a[i+1]
+            title = a[i + 1]
             c = list(title)
             sa = ""
             for i in c:
                 if i.isdigit():
-                  sa += i
+                    sa += i
             total += int(sa)
-            d.loc[count, 'minted']  = total
-            count +=1
+            d.loc[count, 'minted'] = total
+            count += 1
     count = 0
     total = 0
 
@@ -60,15 +62,15 @@ if page == "IMX":
         title = ""
         total = 0
         if 'class="small_desc_label">Holders</div><div' in a[i]:
-            title =  a[i+1]
+            title = a[i + 1]
             c = list(title)
             sa = ""
             for i in c:
                 if i.isdigit():
-                  sa += i
+                    sa += i
             total += int(sa)
-            d.loc[count, 'holders']  = total
-            count +=1
+            d.loc[count, 'holders'] = total
+            count += 1
     count = 0
     total = 0
 
@@ -76,15 +78,15 @@ if page == "IMX":
         title = ""
         total = 0
         if 'class="small_desc_label">Sales</div><div' in a[i]:
-            title  = a[i+1]
+            title = a[i + 1]
             c = list(title)
             sa = ""
             for i in c:
                 if i.isdigit():
-                  sa += i
+                    sa += i
             total += int(sa)
-            d.loc[count, 'NFTssold']  = total
-            count +=1
+            d.loc[count, 'NFTssold'] = total
+            count += 1
     count = 0
 
     total = 0
@@ -93,29 +95,31 @@ if page == "IMX":
         title = ""
         total = 0
         if 'class="arrow_rank">' in a[i]:
-            title =  a[i+1]
+            title = a[i + 1]
             c = list(title)
             sa = ""
             for i in c:
                 if i.isdigit():
-                  sa += i
+                    sa += i
 
-            d.loc[count, 'total sales (USD)']  = sa
+            d.loc[count, 'total sales (USD)'] = sa
             count += 1
     st.dataframe(d)
     number = str(len(d))
     st.write("Number of NFT Projects on IMX = " + number)
 
 if page == "L1/L2 Network Activities":
-    st.title("Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum Network")
-    st.write("Avalanche and Fantom has a 2 day delay in their explorer")
-    st.write("Algorand's explorer has to be updated 4 months later")
+    st.title("L1/2 Network")
+    st.write("Networks supported: Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
         columns=['blocktime', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
-                 'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress', 'elrondtxnactivity',
+                 'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
+                 'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
-
-   
+    st.write("Today's date: " + str(date.today()) )
+    history = date.today() - pd.DateOffset(months=3)
+    st.write("Dataset follows a 3 month window" )
+    history = str(history)[:10]
     url = "https://snowtrace.io/chart/tx"
 
     # Make a GET request to fetch the raw HTML content
@@ -124,8 +128,32 @@ if page == "L1/L2 Network Activities":
     # Parse the html content
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
+    months = [
+              "January",
+              "Febuary",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December"]
 
-    start = a.find('October 1, 2021')
+    dd = history[8:]
+    if dd[0] == '0':
+        dd = dd[1]
+    y = history[:4]
+    mm = history[5:7]
+    if mm[0] == '0':
+        mm = mm[1]
+    mm = int(mm)
+    mo  = mm
+    mm = months[mm -1]
+    hist = mm + " " + dd + "," + " " + y
+    start = a.find(hist)
     end = a.find('Highcharts')
     a = a[start:end]
     a = a.split()
@@ -160,9 +188,6 @@ if page == "L1/L2 Network Activities":
             count += 1
     count = 0
 
-
-
-
     url = "https://ftmscan.com/chart/tx"
 
     # Make a GET request to fetch the raw HTML content
@@ -171,7 +196,7 @@ if page == "L1/L2 Network Activities":
     # Parse the html content
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
-    start = a.find('October 1, 2021')
+    start = a.find(hist)
     end = a.find('Highcharts')
     a = a[start:end]
     a = a.split()
@@ -192,7 +217,7 @@ if page == "L1/L2 Network Activities":
             count += 1
     count = 0
     b = ""
-    for i in range(len(a)-1):
+    for i in range(len(a) - 1):
 
         if a[i] == 'formattedValue':
             b = a[i + 2]
@@ -206,8 +231,8 @@ if page == "L1/L2 Network Activities":
 
     d.loc[0, 'blocktime'] = '1 June 2020'
 
-# fantom
-    #elrond
+    # fantom
+    # elrond
 
     url = "https://data.elrond.com/latestcomplete/transactionshistorical/transactions/count_24h"
 
@@ -217,7 +242,7 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
 
-    start = a.find('"time":"2021-10-01T00:00:00.000Z"')
+    start = a.find('"time":"' + history+ 'T00:00:00.000Z"')
     b = a[start:].split("time")
     count = 0
     total = 0
@@ -238,14 +263,22 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
 
-    start = a.find('"time":"2021-10-01T00:00:00.000Z"')
+    start = a.find('"time":"' + history+ 'T00:00:00.000Z"')
     b = a[start:].split("time")
 
-    count = 0
+    count = 1
     total = 0
-    initial = 799298
+    l = b[1][35:]
+    c = l
+    sa = ""
+
+    for j in c:
+        if j.isdigit():
+            sa += str(j)
+    initial = int(sa)
+
     temp = 0
-    for i in range(1, len(b)):
+    for i in range(2, len(b)):
         l = b[i][35:]
         c = l
         sa = ""
@@ -254,7 +287,7 @@ if page == "L1/L2 Network Activities":
             if j.isdigit():
                 sa += str(j)
 
-        if count ==0:
+        if count == 0:
 
             d.loc[count, 'elrondnewaddress'] = int(sa) - initial
             temp = int(sa)
@@ -282,18 +315,22 @@ if page == "L1/L2 Network Activities":
     # Parse the html content
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
-
-    start = a.find('"time-start":1632960000')
+    #converting to epoch
+    epoch = datetime.datetime(int(y), int(mo), int(dd),0,0).strftime('%s')
+    time = int(epoch) - 57600
+    start = a.find('"time-start":' + str(time))
     a = a[start:].split("time")
+    l = a[2][31:]
+    for j in range(len(l)):
+        if l[j].isdigit():
+            sa += l[j]
+        else:
+            break
+    initial = int(sa)
 
-
-    count = 0
-    total = 0
-
-
-
-    count = 0
-    for i in range(2, len(a), 2):
+    count = 1
+    before = 0
+    for i in range(4, len(a), 2):
         c = list(a[i])
         sa = ""
         l = a[i][29:]
@@ -314,13 +351,19 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
 
-    start = a.find('"time-start":1632960000')
+    start = a.find('"time-start":' + str(time))
     a = a[start:].split("time")
+    l = a[2][31:]
+    for j in range(len(l)):
+        if l[j].isdigit():
+            sa += l[j]
+        else:
+            break
+    initial = int(sa)
 
-    initial = 13605221
-    count = 0
+    count = 1
     before = 0
-    for i in range(2, len(a), 2):
+    for i in range(4, len(a), 2):
         c = list(a[i])
         sa = ""
         l = a[i][31:]
@@ -329,7 +372,7 @@ if page == "L1/L2 Network Activities":
                 sa += l[j]
             else:
                 break
-        if i == 2:
+        if i == 4:
 
             d.loc[count, 'algorandnewaddress'] = int(sa) - initial
             before = int(sa)
@@ -350,12 +393,12 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
 
-    start = a.find('September 30, 2021')
+    start = a.find(hist)
     end = a.find('Highcharts')
 
     a = a[start:end].split()
 
-    count = 0
+    count = 1
     total = 0
 
     for i in range(14, len(a)):
@@ -366,10 +409,10 @@ if page == "L1/L2 Network Activities":
             for i in c:
                 if i.isdigit():
                     sa += i
-            d.loc[count, 'polynewaddress'] = sa
+            d.loc[count, 'polynewaddress'] = int(sa)
             count += 1
 
-    count = 0
+    count = 1
     b = ""
     for i in range(len(a)):
 
@@ -382,9 +425,9 @@ if page == "L1/L2 Network Activities":
                     sa += i
             d.loc[count, 'polytxnactivity'] = int(sa)
             count += 1
-    count = 0
+    count = 1
 
-#arbiscan
+    # arbiscan
     url = "https://arbiscan.io/chart/tx"
 
     # Make a GET request to fetch the raw HTML content
@@ -397,16 +440,14 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
 
-    
-    start = a.find('September 30, 2021')
+    start = a.find(hist)
     end = a.find('Highcharts')
     a = a[start:end].split()
 
-
-    count = 0
+    count = 1
     total = 0
 
-    for i in range(14,len(a)):
+    for i in range(14, len(a)):
         if a[i] == 'newaddress':
             b = a[i + 2]
             c = list(b)
@@ -414,10 +455,10 @@ if page == "L1/L2 Network Activities":
             for i in c:
                 if i.isdigit():
                     sa += i
-            d.loc[count, 'arbinewaddress'] = sa
+            d.loc[count, 'arbinewaddress'] = int(sa)
             count += 1
 
-    count = 0
+    count = 1
     b = ""
     for i in range(len(a)):
 
@@ -431,9 +472,8 @@ if page == "L1/L2 Network Activities":
             d.loc[count, 'arbitxnactivity'] = int(sa)
             count += 1
     count = 0
-
-
-
+    d= d.drop(index = 0 )
+    d = d.drop(index = 1)
     d
 
 
@@ -456,34 +496,34 @@ if page == "L1/L2 Network Activities":
         return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="L1Networks.xlsx">Download csv file</a>'  # decode b'abc' => abc
 
 
-    df = d# your dataframe
+    df = d  # your dataframe
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
     d = d.dropna()
     index = d['blocktime']
 
-    df =d[['polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
+    df = d[[ 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
+            'algorandnewaddress']].dropna()
     df = df.set_index(index)
-    st.write("New Daily Addresses from 1 October 2021")
+    st.write("New Daily Addresses from " + hist)
     st.line_chart(df)
 
-    df = d[['polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity','algorandtxnactivity']].dropna()
+    df = d[['polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
+            'algorandtxnactivity']].dropna()
     df = df.set_index(index)
-    st.write("Daily Transaction Activity from 1 October 2021")
+    st.write("Daily Transaction Activity from " + hist)
     st.line_chart(df)
-    
-    
+
     st.write("Without Polygon")
-    df =d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
+    df = d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
     df = df.set_index(index)
-    st.write("New Daily Addresses from 1 October 2021")
+    st.write("New Daily Addresses from " + hist)
     st.line_chart(df)
 
-    df = d[['arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity','algorandtxnactivity']].dropna()
+    df = d[['arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
     df = df.set_index(index)
-    st.write("Daily Transaction Activity from 1 October 2021")
+    st.write("Daily Transaction Activity from " + hist)
     st.line_chart(df)
-
 
 if page == "OpenSea Rarity":
 
