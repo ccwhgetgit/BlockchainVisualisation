@@ -307,84 +307,6 @@ if page == "L1/L2 Network Activities":
         d.loc[count, 'blocktime'] = l
         count += 1
 
-    import datetime
-
-    url = "https://indexer.algoexplorerapi.io/stats/v2/transactions/count?time-start=1621983374&interval=1D"
-
-    # Make a GET request to fetch the raw HTML content
-    html_content = requests.get(url).text
-
-    # Parse the html content
-    soup = BeautifulSoup(html_content, "html.parser")
-    a = soup.prettify()
-    #converting to epoch
-    epoch = datetime.datetime(int(y), int(mo), int(dd),0,0).strftime('%s')
-    time = int(epoch) - 57600
-    start = a.find('"time-start":' + str(time))
-    a = a[start:].split("time")
-    l = a[2][29:]
-    for j in range(len(l)):
-        if l[j].isdigit():
-            sa += l[j]
-        else:
-            break
-    initial = int(sa)
-
-
-    count = 1
-    before = 0
-    for i in range(4, len(a), 2):
-        c = list(a[i])
-        sa = ""
-        l = a[i][29:]
-        for i in range(len(l)):
-            if l[i].isdigit():
-                sa += l[i]
-            else:
-                break
-        d.loc[count, 'algorandtxnactivity'] = int(sa)
-        count += 1
-
-    url = "https://indexer.algoexplorerapi.io/stats/v2/accounts/balances?time-start=1621983259&interval=1D"
-
-    # Make a GET request to fetch the raw HTML content
-    html_content = requests.get(url).text
-
-    # Parse the html content
-    soup = BeautifulSoup(html_content, "html.parser")
-    a = soup.prettify()
-
-    start = a.find('"time-start":' + str(time))
-    a = a[start:].split("time")
-    l = a[2][31:]
-    for j in range(len(l)):
-        if l[j].isdigit():
-            sa += l[j]
-        else:
-            break
-    initial = int(sa)
-
-    count = 1
-    before = 0
-    for i in range(4, len(a), 2):
-        c = list(a[i])
-        sa = ""
-        l = a[i][31:]
-        for j in range(len(l)):
-            if l[j].isdigit():
-                sa += l[j]
-            else:
-                break
-        if i == 4:
-
-            d.loc[count, 'algorandnewaddress'] = int(sa) - initial
-            before = int(sa)
-        else:
-
-            d.loc[count, 'algorandnewaddress'] = int(sa) - before
-            before = int(sa)
-        count += 1
-
     # polyscan
 
     url = "https://polygonscan.com/chart/tx"
@@ -518,12 +440,12 @@ if page == "L1/L2 Network Activities":
     st.line_chart(df)
 
     st.write("Without Polygon")
-    df = d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
+    df = d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', ]].dropna()
     df = df.set_index(index)
     st.write("New Daily Addresses from " + hist)
     st.line_chart(df)
 
-    df = d[['arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
+    df = d[['arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Daily Transaction Activity from " + hist)
     st.line_chart(df)
