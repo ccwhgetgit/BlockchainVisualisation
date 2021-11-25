@@ -318,6 +318,8 @@ if page == "L1/L2 Network Activities":
     a = soup.prettify()
     #converting to epoch
     epoch = datetime.datetime(int(y), int(mo), int(dd),0,0).strftime('%s')
+    st.write(epoch)
+    st.write(a)
     time = int(epoch) - 57600
     start = a.find('"time-start":' + str(time))
     a = a[start:].split("time")
