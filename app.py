@@ -111,9 +111,9 @@ if page == "IMX":
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
 
-    st.write("Networks supported: Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
+    st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
-        columns=['blocktime', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime', 'ethtxnactivity','ethnewaddress', 'terratxnactivity', 'terranewaddress','polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -479,6 +479,58 @@ if page == "L1/L2 Network Activities":
             d.loc[count, 'arbitxnactivity'] = int(sa)
             count += 1
     count = 0
+    
+    
+    #terra
+    url = "https://api.flipsidecrypto.com/api/v2/queries/791a0a78-6b93-4ed2-824b-435acbea5bc7/data/latest"
+    html_content = requests.get(url).text
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+
+    start = a.find(history)
+    a = a[start:].split("MONTH")
+    count = 0
+    total = 0
+    for i in range(len(a)):
+        l = a[i][20:]
+        sa = ""
+        for k in range(len(l)):
+            if l[k].isdigit():
+                sa += l[k]
+        d.loc[count, 'terratxnactivity'] = int(sa)
+        count += 1
+
+
+        #stops here
+#etherscan
+
+    url = "https://api.flipsidecrypto.com/api/v2/queries/bc3f3177-a40c-4f05-ad2f-5137937a5a2c/data/latest"
+    html_content = requests.get(url).text
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+    start = a.find(history)
+    a = a[start:].split("MONTH")
+    count = 0
+    total = 0
+    for i in range(len(a)):
+        l = a[i][20:]
+        sa = ""
+        for k in range(len(l)):
+            if l[k].isdigit():
+                sa += l[k]
+        d.loc[count, 'ethtxnactivity'] = int(sa)
+        count += 1
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     d= d.drop(index = 0 )
     d = d.drop(index = 1)
     d
