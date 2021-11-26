@@ -489,7 +489,7 @@ if page == "L1/L2 Network Activities":
 
     start = a.find(history)
     a = a[start:].split("MONTH")
-    count = 0
+    count = 1
     total = 0
     for i in range(len(a)):
         l = a[i][20:]
@@ -510,7 +510,7 @@ if page == "L1/L2 Network Activities":
     a = soup.prettify()
     start = a.find(history)
     a = a[start:].split("MONTH")
-    count = 0
+    count = 1
     total = 0
     for i in range(len(a)):
         l = a[i][20:]
@@ -525,6 +525,7 @@ if page == "L1/L2 Network Activities":
     
     d= d.drop(index = 0 )
     d = d.drop(index = 1)
+    d = d.drop(index = 2)
     d
 
 
