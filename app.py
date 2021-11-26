@@ -113,7 +113,7 @@ if page == "L1/L2 Network Activities":
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
-        columns=['blocktime', 'ethtxnactivity','ethnewaddress', 'terratxnactivity', 'terranewaddress','polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime', 'ethtxnactivity','terratxnactivity','polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -520,14 +520,6 @@ if page == "L1/L2 Network Activities":
                 sa += l[k]
         d.loc[count, 'ethtxnactivity'] = int(sa)
         count += 1
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
