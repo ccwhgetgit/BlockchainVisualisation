@@ -559,7 +559,7 @@ if page == "L1/L2 Network Activities":
     st.write("New Daily Addresses from " + hist)
     st.line_chart(df)
 
-    df = d[['polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
+    df = d[['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
             'algorandtxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Daily Transaction Activity from " + hist)
@@ -571,7 +571,7 @@ if page == "L1/L2 Network Activities":
     st.write("New Daily Addresses from " + hist)
     st.line_chart(df)
 
-    df = d[['arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
+    df = d[['ethtxnactivity', 'terratxnactivity','arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Daily Transaction Activity from " + hist)
     st.line_chart(df)
