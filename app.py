@@ -614,7 +614,7 @@ if page == "L1/L2 Network Activities":
 
     df = d  # your dataframe
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
-
+    
     d = d.dropna()
     index = d['blocktime']
     
@@ -622,14 +622,17 @@ if page == "L1/L2 Network Activities":
     st.write("**Past 2 Weeks**")
     
     st.write("New Addresses")
-    df = d.loc[  len(df) - 15     :   len(df) ,      [['terranewaddress', 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
-            'algorandnewaddress']]].dropna()
+    df = d [['terranewaddress', 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
+            'algorandnewaddress']].dropna()
     df = df.set_index(index)
+    l = list(np.arange(2, len(d) - 15))
+    df.drop(df.index[l])
     st.line_chart(df)
     
     st.write("Txn Activity")
-    df =  d.loc[  len(df) - 15     :   len(df) ,  [['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
-            'algorandtxnactivity']]].dropna()
+    df =  d [['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
+            'algorandtxnactivity']].dropna()
+    df.drop(df.index[l])
     st.line_chart(df)
     
     
