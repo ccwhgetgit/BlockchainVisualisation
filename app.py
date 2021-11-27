@@ -146,7 +146,8 @@ if page == "NFT Marketplaces":
     st.write("Number of NFT Projects on Terra = " + number)
     st.write("Total sales volume (LUNA): " + str(d['total vol (in LUNA)'].sum(axis = 0)) )
     st.write("**NFT Projects on Terra**")
-    st.bar_chart(d[['project', 'total vol (in LUNA)']])
+    
+    st.bar_chart(d[['project', 'total vol (in LUNA)']].set_index(index))
     
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
@@ -233,7 +234,7 @@ if page == "L1/L2 Network Activities":
     url = "https://ftmscan.com/chart/tx"
 
     # Make a GET request to fetch the raw HTML content
-    html_content = requests.get(url).text
+    html_content = requests.get(url).st.write("New Addresses")text
 
     # Parse the html content
     soup = BeautifulSoup(html_content, "html.parser")
@@ -636,7 +637,7 @@ if page == "L1/L2 Network Activities":
     st.line_chart(df[77:])
     
     
-    st.write("**From**" + hist)
+    st.write("**From** " + hist)
     df = d[['terranewaddress', 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
             'algorandnewaddress']].dropna()
     df = df.set_index(index)
@@ -649,7 +650,7 @@ if page == "L1/L2 Network Activities":
     st.write("Txn Activity")
     st.line_chart(df)
 
-    st.write("Without Polygon")
+    st.write("**Without Polygon**")
     df = d[['terranewaddress','arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
     df = df.set_index(index)
     st.write("New Addresses")
