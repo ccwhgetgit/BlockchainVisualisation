@@ -561,7 +561,7 @@ if page == "L1/L2 Network Activities":
   
             d.loc[count, 'terranewaddress'] = int(sa)
             count +=1
-     l[start:]
+    l[start:]
         #stops here
 #etherscan
 
