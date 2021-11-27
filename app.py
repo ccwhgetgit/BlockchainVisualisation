@@ -234,7 +234,7 @@ if page == "L1/L2 Network Activities":
     url = "https://ftmscan.com/chart/tx"
 
     # Make a GET request to fetch the raw HTML content
-    html_content = requests.get(url).st.write("New Addresses")text
+    html_content = requests.get(url).text
 
     # Parse the html content
     soup = BeautifulSoup(html_content, "html.parser")
