@@ -145,6 +145,7 @@ if page == "NFT Marketplaces":
     
     number = str(len(d))
     st.write("Number of NFT Projects on Terra = " + number)
+    st.write("Total sales volume (LUNA): " + d['total vol (in LUNA)'].sum(axis = 0) )
     st.write("**NFT Projects on Terra**")
     st.bar_chart(d[['project', 'total vol (in LUNA)']])
     
