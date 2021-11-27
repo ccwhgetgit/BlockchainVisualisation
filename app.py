@@ -160,6 +160,7 @@ if page == "L1/L2 Network Activities":
     st.write("Today's date: " + str(date.today()) )
     history = date.today() - pd.DateOffset(months=3)
     st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers**" )
+    st.write("Delay of up to 2 days")
     history = str(history)[:10]
     url = "https://snowtrace.io/chart/tx"
 
@@ -550,7 +551,7 @@ if page == "L1/L2 Network Activities":
     history = str(history)[:10] 
     start = a.find( history) 
     b = a[start:].split("DATE")
-    for i in range(1, len(b)): 
+    for i in range(0, len(b)): 
             l = b[i]
             start = l.find('NEW_ACCOUNTS') +13
             sa = ""
