@@ -617,7 +617,23 @@ if page == "L1/L2 Network Activities":
 
     d = d.dropna()
     index = d['blocktime']
-
+    
+    
+    st.write("**Past 2 Weeks**")
+    
+    st.write("New Addresses")
+    df = d.loc[  len(df) - 15     :   len(df) ,      [['terranewaddress', 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
+            'algorandnewaddress']]].dropna()
+    df = df.set_index(index)
+    st.line_chart(df)
+    
+    st.write("Txn Activity")
+    df =  d.loc[  len(df) - 15     :   len(df) ,  [['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
+            'algorandtxnactivity']]].dropna()
+    st.line_chart(df)
+    
+    
+    
     df = d[['terranewaddress', 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
             'algorandnewaddress']].dropna()
     df = df.set_index(index)
@@ -640,6 +656,8 @@ if page == "L1/L2 Network Activities":
     df = df.set_index(index)
     st.write("Daily Transaction Activity from " + hist)
     st.line_chart(df)
+    
+    
 
 if page == "OpenSea Rarity":
 
