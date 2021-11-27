@@ -147,7 +147,7 @@ if page == "NFT Marketplaces":
     st.write("Total sales volume (LUNA): " + str(d['total vol (in LUNA)'].sum(axis = 0)) )
     st.write("**NFT Projects on Terra**")
     
-    st.bar_chart(d[['project', 'total vol (in LUNA)']].set_index(index))
+    st.bar_chart(d[['project', 'total vol (in LUNA)']])
     
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
