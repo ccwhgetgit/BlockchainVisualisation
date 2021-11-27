@@ -11,6 +11,7 @@ import datetime
 import plotly.express as px
 from io import BytesIO
 
+st.title("Tracking Data Points")
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
 if page == "NFT Marketplaces":
     url = "https://imxflow.com"
@@ -558,10 +559,10 @@ if page == "L1/L2 Network Activities":
             for j in l[start:stop]: 
                 if j.isdigit():
                   sa += str(j)
-
+    start
+    stop
     d.loc[count, 'terranewaddress'] = int(sa)
     count +=1
-    sa
         #stops here
 #etherscan
 
