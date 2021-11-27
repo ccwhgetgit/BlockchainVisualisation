@@ -111,7 +111,7 @@ if page == "NFT Marketplaces":
     st.write("**NFT Projects on Terra**")
     st.bar_chart(d[['project', 'total sales (USD)']])
     
-    st.title('Terra NFT - Random Earth + Knowhere Total Sales Volume')
+    st.title('Terra Random Earth + Knowhere Marketplace')
     url="https://api.flipsidecrypto.com/api/v2/queries/b6a4f795-12eb-4d7c-b76d-ba3af5b6eaac/data/latest"
 
     # Make a GET request to fetch the raw HTML content
