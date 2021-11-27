@@ -554,7 +554,7 @@ if page == "L1/L2 Network Activities":
     for i in range(1, len(b)): 
             l = b[i]
             start = l.find('NEW_ACCOUNTS')
-            stop = l.find('ADDRESS_COUNT')
+            stop = l.find('ADDRESS')
             sa = ""
             for j in l[start:stop]: 
                 if j.isdigit():
