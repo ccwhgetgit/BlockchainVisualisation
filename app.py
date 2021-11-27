@@ -10,8 +10,8 @@ from datetime import date
 import datetime
 from io import BytesIO
 
-page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "IMX", "OpenSea Rarity"])
-if page == "IMX":
+page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
+if page == "NFT Marketplaces":
     url = "https://imxflow.com"
     # Make a GET request to fetch the raw HTML content
     html_content = requests.get(url).text
@@ -105,6 +105,35 @@ if page == "IMX":
             d.loc[count, 'total sales (USD)'] = sa
             count += 1
     st.dataframe(d)
+    number = str(len(d))
+    st.write("Number of NFT Projects on IMX = " + number)
+
+    st.title('Terra NFT - Random Earth + Knowhere Total Sales Volume')
+    url="https://api.flipsidecrypto.com/api/v2/queries/b6a4f795-12eb-4d7c-b76d-ba3af5b6eaac/data/latest"
+
+    # Make a GET request to fetch the raw HTML content
+    html_content = requests.get(url).text
+
+    # Parse the html content
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+    a = a.split("Project Name")
+    d = pd.DataFrame(columns = ['project','total vol (in LUNA)'])
+    count = 0 
+    total = 0 
+    for i in range(1, len(a)): 
+        l = a[i] 
+        stop = l.find(',')
+        name = l[3:stop-1]
+        d.loc[count, 'project'] = name
+
+        vol = l.find('LUNA')
+        end = l.find(',{')
+        sales = l[vol +7:end -1 ]
+        d.loc[count, 'total vol (in LUNA)'] = sales
+        count += 1
+    d
+    
     number = str(len(d))
     st.write("Number of NFT Projects on IMX = " + number)
 
