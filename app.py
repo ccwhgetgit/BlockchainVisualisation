@@ -553,14 +553,13 @@ if page == "L1/L2 Network Activities":
     b
     for i in range(1, len(b)): 
             l = b[i]
-            start = l.find('NEW_ACCOUNTS')
-            stop = l.find('ADDRESS')
+            start = l.find('NEW_ACCOUNTS') +13
             sa = ""
-            for j in l[start:stop]: 
+            for j in l[start:]: 
                 if j.isdigit():
                   sa += str(j)
-    start
-    stop
+    l[start:
+  
     d.loc[count, 'terranewaddress'] = int(sa)
     count +=1
         #stops here
