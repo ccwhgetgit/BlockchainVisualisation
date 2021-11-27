@@ -152,7 +152,7 @@ if page == "L1/L2 Network Activities":
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
-        columns=['blocktime', 'ethtxnactivity','terratxnactivity','polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime', 'ethtxnactivity','terratxnactivity','terranewaddress', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -539,6 +539,28 @@ if page == "L1/L2 Network Activities":
         d.loc[count, 'terratxnactivity'] = int(sa)
         count += 1
 
+        
+    url="https://api.flipsidecrypto.com/api/v2/queries/1dbf29af-f3fa-4c55-aaba-a2568df750b8/data/latest"
+    html_content = requests.get(url).text
+    soup = BeautifulSoup(html_content, "html.parser") 
+    a = soup.prettify()
+    a
+    count = 0 
+    history = date.today() - pd.DateOffset(months=3)
+    history = str(history)[:10] 
+    start = a.find( history) 
+    b = a[start:].split("DATE") 
+    for i in range(1, len(b)): 
+            l = b[i]
+            start = l.find('NEW_ACCOUNTS')
+            stop = l.find('ADDRESS_COUNT')
+            sa = ""
+            for j in l[start:stop]: 
+                if j.isdigit():
+                  sa += str(j)
+
+    d.loc[count, 'terranewaddress'] = int(sa)
+    count +=1
 
         #stops here
 #etherscan
@@ -594,7 +616,7 @@ if page == "L1/L2 Network Activities":
     d = d.dropna()
     index = d['blocktime']
 
-    df = d[[ 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
+    df = d[['terranewaddress', 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
             'algorandnewaddress']].dropna()
     df = df.set_index(index)
     st.write("New Daily Addresses from " + hist)
@@ -607,7 +629,7 @@ if page == "L1/L2 Network Activities":
     st.line_chart(df)
 
     st.write("Without Polygon")
-    df = d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
+    df = d[['terranewaddress','arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
     df = df.set_index(index)
     st.write("New Daily Addresses from " + hist)
     st.line_chart(df)
