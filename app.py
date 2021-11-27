@@ -544,7 +544,6 @@ if page == "L1/L2 Network Activities":
     html_content = requests.get(url).text
     soup = BeautifulSoup(html_content, "html.parser") 
     a = soup.prettify()
-    a
     count = 0 
     history = date.today() - pd.DateOffset(months=3)
     history = str(history)[:10] 
