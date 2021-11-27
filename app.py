@@ -530,6 +530,7 @@ if page == "L1/L2 Network Activities":
     a = a[start:].split("MONTH")
     count = 1
     total = 0
+    a
     for i in range(len(a)):
         l = a[i][20:]
         sa = ""
