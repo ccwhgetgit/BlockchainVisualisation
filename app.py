@@ -557,10 +557,11 @@ if page == "L1/L2 Network Activities":
             for j in l[start:]: 
                 if j.isdigit():
                   sa += str(j)
-    l[start:
+                
   
-    d.loc[count, 'terranewaddress'] = int(sa)
-    count +=1
+            d.loc[count, 'terranewaddress'] = int(sa)
+            count +=1
+     l[start:]
         #stops here
 #etherscan
 
