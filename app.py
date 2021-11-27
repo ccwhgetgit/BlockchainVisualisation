@@ -108,7 +108,7 @@ if page == "NFT Marketplaces":
     st.dataframe(d)
     number = str(len(d))
     st.write("Number of NFT Projects on IMX = " + number)
-    st.write("**NFT Projects on Terra**")
+    st.write("**NFT Projects on IMX**")
     st.bar_chart(d[['project', 'total sales (USD)']])
     
     st.title('Terra Random Earth + Knowhere Marketplace')
