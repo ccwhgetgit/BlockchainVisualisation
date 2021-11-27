@@ -550,7 +550,6 @@ if page == "L1/L2 Network Activities":
     history = str(history)[:10] 
     start = a.find( history) 
     b = a[start:].split("DATE")
-    b
     for i in range(1, len(b)): 
             l = b[i]
             start = l.find('NEW_ACCOUNTS') +13
