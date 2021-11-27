@@ -135,6 +135,8 @@ if page == "NFT Marketplaces":
         for j in range(len(sales)):
             if sales[j].isdigit():
                 s += sales[j]
+            if sales[j] == '.':
+                break
         d.loc[count, 'total vol (in LUNA)'] = int(s)
         count += 1
     d
