@@ -141,11 +141,9 @@ if page == "NFT Marketplaces":
     
     number = str(len(d))
     st.write("Number of NFT Projects on Terra = " + number)
-    st.title("Pie Chart")
-    fig = px.pie(d, values=d['total vol (in LUNA)'], names=d['project'], title='Breakdown by Sales Volume')
-    st.plotly_chart(fig)
-            
-            
+    st.write("Visual Illustration")
+    st.bar_chart(d)
+    
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
 
