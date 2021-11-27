@@ -8,6 +8,7 @@ import pandas as pd
 import time
 from datetime import date
 import datetime
+import plotly.express as px
 from io import BytesIO
 
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
@@ -135,8 +136,12 @@ if page == "NFT Marketplaces":
     d
     
     number = str(len(d))
-    st.write("Number of NFT Projects on IMX = " + number)
-
+    st.write("Number of NFT Projects on Terra = " + number)
+    st.title("Pie Chart")
+    fig = px.pie(d, values=d['total vol (in LUNA)'], names=d['project'], title='Breakdown by Sales Volume')
+    st.plotly_chart(fig)
+            
+            
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
 
