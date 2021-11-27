@@ -108,7 +108,9 @@ if page == "NFT Marketplaces":
     st.dataframe(d)
     number = str(len(d))
     st.write("Number of NFT Projects on IMX = " + number)
-
+    st.write("**NFT Projects on Terra**")
+    st.bar_chart(d[['project', 'total sales (USD)']])
+    
     st.title('Terra NFT - Random Earth + Knowhere Total Sales Volume')
     url="https://api.flipsidecrypto.com/api/v2/queries/b6a4f795-12eb-4d7c-b76d-ba3af5b6eaac/data/latest"
 
@@ -143,7 +145,7 @@ if page == "NFT Marketplaces":
     
     number = str(len(d))
     st.write("Number of NFT Projects on Terra = " + number)
-    st.write("Visual Illustration")
+    st.write("**NFT Projects on Terra**")
     st.bar_chart(d[['project', 'total vol (in LUNA)']])
     
 if page == "L1/L2 Network Activities":
