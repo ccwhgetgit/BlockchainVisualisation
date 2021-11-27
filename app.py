@@ -526,7 +526,7 @@ if page == "L1/L2 Network Activities":
     d= d.drop(index = 0 )
     d = d.drop(index = 1)
     d = d.drop(index = 2)
-    d = d.drop(index = len(d))
+    
     d
 
 
