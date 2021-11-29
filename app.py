@@ -14,6 +14,8 @@ from io import BytesIO
 st.title("Tracking Data Points")
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
 if page == "NFT Marketplaces":
+    
+    '''
     url = "https://imxflow.com"
     # Make a GET request to fetch the raw HTML content
     html_content = requests.get(url).text
@@ -109,7 +111,7 @@ if page == "NFT Marketplaces":
     st.dataframe(d)
     number = str(len(d))
     st.write("Number of NFT Projects on IMX = " + number)
-    
+    '''
     st.title('Terra Random Earth + Knowhere Marketplace')
     url="https://api.flipsidecrypto.com/api/v2/queries/b6a4f795-12eb-4d7c-b76d-ba3af5b6eaac/data/latest"
 
@@ -154,7 +156,7 @@ if page == "L1/L2 Network Activities":
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
-        columns=['blocktime', 'ethtxnactivity','terratxnactivity','terranewaddress', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime', 'ethtxnactivity','terratxnactivity', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -638,7 +640,7 @@ if page == "L1/L2 Network Activities":
     
     
     st.write("**From** " + hist)
-    df = d[['terranewaddress', 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
+    df = d[[ 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
             'algorandnewaddress']].dropna()
     df = df.set_index(index)
     st.write("New Addresses")
@@ -651,7 +653,7 @@ if page == "L1/L2 Network Activities":
     st.line_chart(df)
 
     st.write("**Without Polygon**")
-    df = d[['terranewaddress','arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
+    df = d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
     df = df.set_index(index)
     st.write("New Addresses")
     st.line_chart(df)
