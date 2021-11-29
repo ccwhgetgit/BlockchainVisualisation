@@ -625,7 +625,7 @@ if page == "L1/L2 Network Activities":
     st.write("**Past 2 Weeks**")
     
     st.write("New Addresses")
-    df = d [['terranewaddress', 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
+    df = d [[ 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
             'algorandnewaddress']].dropna()
     df = df.set_index(index)
     
