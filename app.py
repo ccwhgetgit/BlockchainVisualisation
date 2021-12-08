@@ -14,7 +14,119 @@ from io import BytesIO
 st.title("Tracking Data Points")
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
 if page == "NFT Marketplaces":
-    
+    import pandas as pd
+
+    d = pd.DataFrame(columns = ['fa','bb', 'vv'])
+    #forge arena 
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
+    driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/forge-arena/chart/all?currency=USD')  
+    page_source = driver.page_source
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(page_source, 'lxml')
+    a = str(soup)
+    a = a.split()
+    l = a[4]
+    start = l.find('data')
+    end = l.find('Transactions')
+    l1 = l[x:end]
+    end2 = l1.find('name')
+    l1 = l1[5:end2][::-1][5:]
+
+    number = 0 
+    usergrowth = []
+    count = 0 
+    for i in range(len(l1)): 
+        number = 0 
+        if l1[i].isdigit(): 
+            s += l1[i]
+        elif l1[i] == ',':
+            s = s[::-1]
+            usergrowth.append(s)
+
+            d.loc[count, 'fa'] = s
+            s = ""
+            count += 1
+
+    d.loc[0,'fa']= 8 
+    d
+
+
+
+
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
+    driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/berserk-vulcanites-unleashed/chart/all?currency=USD')  
+    page_source = driver.page_source
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(page_source, 'lxml')
+    a = str(soup)
+    a = a.split()
+    l = a[4]
+    start = l.find('data')
+    end = l.find('Transactions')
+    l1 = l[x:end]
+    end2 = l1.find('name')
+    l1 = l1[5:end2][::-1][5:]
+
+    number = 0 
+    usergrowth = []
+    count = 2 
+    for i in range(len(l1)): 
+        number = 0 
+        if l1[i].isdigit(): 
+            s += l1[i]
+        elif l1[i] == ',':
+            s = s[::-1]
+            usergrowth.append(s)
+            d.loc[count, 'bb'] = s
+            s = ""
+            count += 1
+
+    d.loc[0, 'bb'] = 0 
+    d.loc[1, 'bb'] = 0 
+    d.loc[2, 'bb'] = 109 
+
+
+
+    driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
+    driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/vulcanverse/chart/all?currency=USD')  
+    page_source = driver.page_source
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(page_source, 'lxml')
+    a = str(soup)
+    a = a.split()
+    l = a[4]
+    start = l.find('data')
+    end = l.find('Transactions')
+    l1 = l[x:end]
+    end2 = l1.find('name')
+    l1 = l1[5:end2][::-1][5:]
+
+    number = 0 
+    usergrowth = []
+    count = 3 
+    for i in range(len(l1)): 
+        number = 0 
+        if l1[i].isdigit(): 
+            s += l1[i]
+        elif l1[i] == ',':
+            s = s[::-1]
+            d.loc[count, 'vv'] = s
+            s = ""
+            count += 1
+
+
+    d.loc[0, 'vv'] = 0 
+    d.loc[1, 'vv'] = 0 
+
+    d.loc[2, 'vv'] = 0 
+    d.loc[3, 'vv'] = 124
+    d
+
+
     st.write('https://immutascan.io/address/0xacb3c6a43d15b907e8433077b6d38ae40936fe2c?tab=0')
     
     st.title('Terra Random Earth + Knowhere Marketplace')
