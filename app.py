@@ -98,7 +98,7 @@ if page == "NFT Marketplaces":
             s = ""
             count += 1
 
-    d.loc[0,'fa']= 8 
+    d.loc[0,'ForgedArena']= 8 
     
     
     driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
@@ -129,9 +129,9 @@ if page == "NFT Marketplaces":
             s = ""
             count += 1
 
-    d.loc[0, 'bb'] = 0 
-    d.loc[1, 'bb'] = 0 
-    d.loc[2, 'bb'] = 109 
+    d.loc[0, 'Berserk'] = 0 
+    d.loc[1, 'Berserk'] = 0 
+    d.loc[2, 'Berserk'] = 109 
 
 
 
@@ -163,11 +163,11 @@ if page == "NFT Marketplaces":
             count += 1
 
 
-    d.loc[0, 'vv'] = 0 
-    d.loc[1, 'vv'] = 0 
+    d.loc[0, 'VulcanVerse'] = 0 
+    d.loc[1, 'VulcanVerse'] = 0 
 
-    d.loc[2, 'vv'] = 0 
-    d.loc[3, 'vv'] = 124
+    d.loc[2, 'VulcanVerse'] = 0 
+    d.loc[3, 'VulcanVerse'] = 124
     d
     df = d.dropna()
     
