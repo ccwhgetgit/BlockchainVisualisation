@@ -215,7 +215,7 @@ if page == "L1/L2 Network Activities":
     mo  = mm
     mm = months[mm -1]
     hist = mm + " " + dd + "," + " " + y
-    start = a.find(hist)
+    start = a.find(hist) + 1
     end = a.find('Highcharts')
     a = a[start:end]
     a = a.split()
