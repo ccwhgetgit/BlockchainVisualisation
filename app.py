@@ -69,7 +69,7 @@ if page == "NFT Marketplaces":
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
-    d = pd.DataFrame(columns = ['fa','bb', 'vv'])
+    d = pd.DataFrame(columns = ['Date', 'ForgedArena','Berserk', 'VulcanVerse'])
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/forge-arena/chart/all?currency=USD')  
     page_source = driver.page_source
     from bs4 import BeautifulSoup
@@ -94,11 +94,13 @@ if page == "NFT Marketplaces":
             s = s[::-1]
             usergrowth.append(s)
 
-            d.loc[count, 'fa'] = s
+            d.loc[count, 'ForgedArena'] = s
             s = ""
             count += 1
 
     d.loc[0,'fa']= 8 
+    
+    
     driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/berserk-vulcanites-unleashed/chart/all?currency=USD')  
     page_source = driver.page_source
@@ -123,7 +125,7 @@ if page == "NFT Marketplaces":
         elif l1[i] == ',':
             s = s[::-1]
             usergrowth.append(s)
-            d.loc[count, 'bb'] = s
+            d.loc[count, 'Berserk'] = s
             s = ""
             count += 1
 
@@ -156,7 +158,7 @@ if page == "NFT Marketplaces":
             s += l1[i]
         elif l1[i] == ',':
             s = s[::-1]
-            d.loc[count, 'vv'] = s
+            d.loc[count, 'VulcanVerse'] = s
             s = ""
             count += 1
 
@@ -167,8 +169,9 @@ if page == "NFT Marketplaces":
     d.loc[2, 'vv'] = 0 
     d.loc[3, 'vv'] = 124
     d
-
-
+    df = d.dropna()
+    
+    st.line_chart(df)
 
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
