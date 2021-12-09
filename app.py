@@ -563,27 +563,6 @@ if page == "L1/L2 Network Activities":
         count += 1
 
         
-    url="https://api.flipsidecrypto.com/api/v2/queries/1dbf29af-f3fa-4c55-aaba-a2568df750b8/data/latest"
-    html_content = requests.get(url).text
-    soup = BeautifulSoup(html_content, "html.parser") 
-    a = soup.prettify()
-    count = 0 
-    history = date.today() - pd.DateOffset(months=3)
-    history = str(history)[:10] 
-    start = a.find( history) 
-    b = a[start:].split("DATE")
-    for i in range(0, len(b)): 
-            l = b[i]
-            start = l.find('NEW_ACCOUNTS') +13
-            sa = ""
-            for j in l[start:]: 
-                if j.isdigit():
-                  sa += str(j)
-                if j == '{':
-                    break
-  
-            d.loc[count, 'terranewaddress'] = int(sa)
-            count +=1
     
         #stops here
 #etherscan
