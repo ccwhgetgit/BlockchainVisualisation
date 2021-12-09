@@ -73,7 +73,7 @@ if page == "NFT Marketplaces":
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/forge-arena/chart/all?currency=USD')  
     page_source = driver.page_source
     from bs4 import BeautifulSoup
-    soup = BeautifulSoup(page_source, 'lxml')
+    soup = BeautifulSoup(page_source)
     a = str(soup)
     a = a.split()
     l = a[4]
@@ -110,7 +110,7 @@ if page == "NFT Marketplaces":
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/berserk-vulcanites-unleashed/chart/all?currency=USD')  
     page_source = driver.page_source
     from bs4 import BeautifulSoup
-    soup = BeautifulSoup(page_source, 'lxml')
+    soup = BeautifulSoup(page_source)
     a = str(soup)
     a = a.split()
     l = a[4]
@@ -144,7 +144,7 @@ if page == "NFT Marketplaces":
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/vulcanverse/chart/all?currency=USD')  
     page_source = driver.page_source
     from bs4 import BeautifulSoup
-    soup = BeautifulSoup(page_source, 'lxml')
+    soup = BeautifulSoup(page_source)
     a = str(soup)
     a = a.split()
     l = a[4]
