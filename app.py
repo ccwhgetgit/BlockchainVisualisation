@@ -14,7 +14,7 @@ from io import BytesIO
 st.title("Tracking Data Points")
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
 if page == "NFT Marketplaces":
-    import pandas as pd
+  
 
   
     st.write('https://immutascan.io/address/0xacb3c6a43d15b907e8433077b6d38ae40936fe2c?tab=0')
@@ -57,11 +57,11 @@ if page == "NFT Marketplaces":
     st.write("**NFT Projects on Terra**")
     
     st.bar_chart(d[['project', 'total vol (in LUNA)']])
+
     
     import pandas as pd
     from selenium import webdriver
     import os
-
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless")
@@ -69,7 +69,7 @@ if page == "NFT Marketplaces":
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
-    d = pd.DataFrame(columns = ['Date', 'ForgedArena','Berserk', 'VulcanVerse'])
+    d = pd.DataFrame(columns = ['ForgedArena','Berserk', 'VulcanVerse'])
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/forge-arena/chart/all?currency=USD')  
     page_source = driver.page_source
     from bs4 import BeautifulSoup
