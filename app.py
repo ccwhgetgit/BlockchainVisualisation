@@ -11,15 +11,15 @@ import datetime
 import plotly.express as px
 from io import BytesIO
 
-st.title("Tracking Data Points")
+st.title("Surfacing Data Points")
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
 if page == "NFT Marketplaces":
   
 
   
-    st.write('https://immutascan.io/address/0xacb3c6a43d15b907e8433077b6d38ae40936fe2c?tab=0')
+    st.write('IMX : https://immutascan.io/address/0xacb3c6a43d15b907e8433077b6d38ae40936fe2c?tab=0')
     
-    st.title('Terra Random Earth + Knowhere Marketplace')
+    st.title('Terra NFT : Random Earth + Knowhere Marketplace')
     url="https://api.flipsidecrypto.com/api/v2/queries/b6a4f795-12eb-4d7c-b76d-ba3af5b6eaac/data/latest"
 
     # Make a GET request to fetch the raw HTML content
@@ -68,7 +68,7 @@ if page == "NFT Marketplaces":
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-
+    st.title('Vulcan Forged User Growth')
     d = pd.DataFrame(columns = ['ForgedArena','Berserk', 'VulcanVerse'])
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/forge-arena/chart/all?currency=USD')  
     page_source = driver.page_source
@@ -170,6 +170,13 @@ if page == "NFT Marketplaces":
     d.loc[3, 'VulcanVerse'] = 124
     d
     df = d.dropna()
+    
+    st.write('Average over the past week')
+    maximum = len(d)
+    weekly = d.loc[ maximum - 7: maximum, :]
+    weekly
+    
+    
     
     st.line_chart(df)
 
