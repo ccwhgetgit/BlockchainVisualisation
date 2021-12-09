@@ -99,13 +99,6 @@ if page == "NFT Marketplaces":
             count += 1
 
     d.loc[0,'fa']= 8 
-    d
-
-
-
-
-    from selenium import webdriver
-    from selenium.webdriver.common.keys import Keys
     driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/berserk-vulcanites-unleashed/chart/all?currency=USD')  
     page_source = driver.page_source
