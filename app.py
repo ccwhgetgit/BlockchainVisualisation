@@ -77,7 +77,7 @@ if page == "NFT Marketplaces":
     a = str(soup)
     a = a.split()
     l = a[4]
-    start = l.find('data')
+    x = l.find('data')
     end = l.find('Transactions')
     l1 = l[x:end]
     end2 = l1.find('name')
@@ -114,7 +114,7 @@ if page == "NFT Marketplaces":
     a = str(soup)
     a = a.split()
     l = a[4]
-    start = l.find('data')
+    x = l.find('data')
     end = l.find('Transactions')
     l1 = l[x:end]
     end2 = l1.find('name')
@@ -148,7 +148,7 @@ if page == "NFT Marketplaces":
     a = str(soup)
     a = a.split()
     l = a[4]
-    start = l.find('data')
+    x = l.find('data')
     end = l.find('Transactions')
     l1 = l[x:end]
     end2 = l1.find('name')
