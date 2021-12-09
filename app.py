@@ -180,7 +180,8 @@ if page == "L1/L2 Network Activities":
     st.write("Today's date: " + str(date.today()) )
     history = date.today() - pd.DateOffset(months=3)
     st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers**" )
-    st.write("Delay of up to 2 days")
+    st.write("Delay of up to 1 day")
+   
     history = str(history)[:10]
     url = "https://snowtrace.io/chart/tx"
 
@@ -235,7 +236,7 @@ if page == "L1/L2 Network Activities":
             d.loc[count, 'avanewaddress'] = int(sa)
             count += 1
 
-    count = 0
+    count = 1
     skip = 0 
     b = ""
     for i in range(len(a)):
@@ -278,7 +279,7 @@ if page == "L1/L2 Network Activities":
             total = int(sa)
             d.loc[count, 'ftmnewaddress'] = total
             count += 1
-    count = 0
+    count = 1
     b = ""
     for i in range(len(a) - 1):
 
@@ -291,8 +292,6 @@ if page == "L1/L2 Network Activities":
                     sa += i
             d.loc[count, 'ftmtxnactivity'] = int(sa)
             count += 1
-
-    d.loc[0, 'blocktime'] = '1 June 2020'
 
     # fantom
     # elrond
