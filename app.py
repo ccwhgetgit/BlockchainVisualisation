@@ -173,7 +173,8 @@ if page == "NFT Marketplaces":
     
     st.write('Average over the past week:')
     maximum = len(d)
-    weekly = d.loc[ maximum - 7: maximum, :].mean(axis = 0)
+    weekly = d.loc[ maximum - 7: maximum, :]
+    weekly = weekly.mean(axis = 0)
     weekly
     
     
