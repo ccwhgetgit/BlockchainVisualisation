@@ -236,10 +236,12 @@ if page == "L1/L2 Network Activities":
             count += 1
 
     count = 0
+    skip = 0 
     b = ""
     for i in range(len(a)):
-
-        if a[i] == 'formattedValue':
+        if a[i] == 'formattedValue' and skip == 0 :
+            skip += 1 
+        if a[i] == 'formattedValue' and skip > 1:
             b = a[i + 2]
             c = list(b)
             sa = ""
