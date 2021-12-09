@@ -171,10 +171,10 @@ if page == "NFT Marketplaces":
     d
     df = d.dropna()
     
-    st.write('Average over the past week:')
+    st.write('Over the past week:')
     maximum = len(d)
     weekly = d.loc[ maximum - 7: maximum, :]
-    weekly = weekly.mean(axis = 0)
+    
     weekly
     
     
@@ -604,6 +604,12 @@ if page == "L1/L2 Network Activities":
     
     d
 
+    st.write('Over the past week:')
+    maximum = len(d)
+    weekly = d.loc[ maximum - 7: maximum, :]
+    
+    weekly
+    
 
     def to_excel(df):
         output = BytesIO()
