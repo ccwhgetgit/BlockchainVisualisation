@@ -239,9 +239,8 @@ if page == "L1/L2 Network Activities":
     skip = 0 
     b = ""
     for i in range(len(a)):
-        if a[i] == 'formattedValue' and skip == 0 :
-            skip += 1 
-        if a[i] == 'formattedValue' and skip > 1:
+      
+        if a[i] == 'formattedValue':
             b = a[i + 2]
             c = list(b)
             sa = ""
