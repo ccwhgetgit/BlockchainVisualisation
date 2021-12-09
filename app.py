@@ -58,6 +58,125 @@ if page == "NFT Marketplaces":
     
     st.bar_chart(d[['project', 'total vol (in LUNA)']])
     
+    import pandas as pd
+    from selenium import webdriver
+    import os
+
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
+    d = pd.DataFrame(columns = ['fa','bb', 'vv'])
+    driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/forge-arena/chart/all?currency=USD')  
+    page_source = driver.page_source
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(page_source, 'lxml')
+    a = str(soup)
+    a = a.split()
+    l = a[4]
+    start = l.find('data')
+    end = l.find('Transactions')
+    l1 = l[x:end]
+    end2 = l1.find('name')
+    l1 = l1[5:end2][::-1][5:]
+
+    number = 0 
+    usergrowth = []
+    count = 0 
+    for i in range(len(l1)): 
+        number = 0 
+        if l1[i].isdigit(): 
+            s += l1[i]
+        elif l1[i] == ',':
+            s = s[::-1]
+            usergrowth.append(s)
+
+            d.loc[count, 'fa'] = s
+            s = ""
+            count += 1
+
+    d.loc[0,'fa']= 8 
+    d
+
+
+
+
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
+    driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/berserk-vulcanites-unleashed/chart/all?currency=USD')  
+    page_source = driver.page_source
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(page_source, 'lxml')
+    a = str(soup)
+    a = a.split()
+    l = a[4]
+    start = l.find('data')
+    end = l.find('Transactions')
+    l1 = l[x:end]
+    end2 = l1.find('name')
+    l1 = l1[5:end2][::-1][5:]
+
+    number = 0 
+    usergrowth = []
+    count = 2 
+    for i in range(len(l1)): 
+        number = 0 
+        if l1[i].isdigit(): 
+            s += l1[i]
+        elif l1[i] == ',':
+            s = s[::-1]
+            usergrowth.append(s)
+            d.loc[count, 'bb'] = s
+            s = ""
+            count += 1
+
+    d.loc[0, 'bb'] = 0 
+    d.loc[1, 'bb'] = 0 
+    d.loc[2, 'bb'] = 109 
+
+
+
+    driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
+    driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/vulcanverse/chart/all?currency=USD')  
+    page_source = driver.page_source
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(page_source, 'lxml')
+    a = str(soup)
+    a = a.split()
+    l = a[4]
+    start = l.find('data')
+    end = l.find('Transactions')
+    l1 = l[x:end]
+    end2 = l1.find('name')
+    l1 = l1[5:end2][::-1][5:]
+
+    number = 0 
+    usergrowth = []
+    count = 3 
+    for i in range(len(l1)): 
+        number = 0 
+        if l1[i].isdigit(): 
+            s += l1[i]
+        elif l1[i] == ',':
+            s = s[::-1]
+            d.loc[count, 'vv'] = s
+            s = ""
+            count += 1
+
+
+    d.loc[0, 'vv'] = 0 
+    d.loc[1, 'vv'] = 0 
+
+    d.loc[2, 'vv'] = 0 
+    d.loc[3, 'vv'] = 124
+    d
+
+
+
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
 
