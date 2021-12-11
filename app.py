@@ -186,7 +186,7 @@ if page == "L1/L2 Network Activities":
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
-        columns=['blocktime', 'ethtxnactivity','terratxnactivity', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime', 'ethtxnactivity','terratxnactivity','terranewaddress', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -574,7 +574,24 @@ if page == "L1/L2 Network Activities":
         d.loc[count, 'terratxnactivity'] = int(sa)
         count += 1
 
-        
+    url = "https://api.flipsidecrypto.com/api/v2/queries/1dbf29af-f3fa-4c55-aaba-a2568df750b8/data/latest"
+    html_content = requests.get(url).text
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+    start = a.find(history)
+    a = a[start:].split("DATE")
+    count = 1
+    total = 0
+    for i in range(len(a)):
+        l = a[i][30:]
+        sa = ""
+        for k in range(len(l)):
+            if l[k].isdigit():
+                sa += l[k]
+            if l[k] == "}":
+                break
+        d.loc[count, 'terranewaddress'] = int(sa)
+        count += 1
     
         #stops here
 #etherscan
