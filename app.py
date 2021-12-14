@@ -716,29 +716,24 @@ if page == "OpenSea Rarity":
     api = tweepy.API(authenticate, wait_on_rate_limit=True)
 
 
-    def app():
-        st.title("Tweet Verse")
+    
+    st.title("Tweet Verse")
 
-        raw_text = st.text_area("Enter the exact twitter handle (without @ and space) eg. defiMoon,Arthur_0x")
-        l1 = raw_text.split(',')
+    raw_text = st.text_area("Enter the exact twitter handle (without @ and space) eg. defiMoon,Arthur_0x")
+    l1 = raw_text.split(',')
 
-        st.write(l1)
-
-        df = pd.DataFrame(columns = ['name', 'time', 'favourite_count', 'retweet_count', 'tweet'])
-        count = 0
-        for i in range(len(l1)):
-
-            posts = api.user_timeline(screen_name=l1[i], count=100, exclude_replies=True,lang="en", tweet_mode="extended")
-
-
-
-            for tweet in posts[:10]:
-                df.loc[count, 'name'] = l1[i]
-                df.loc[count, 'time'] = str(tweet.created_at)
-                df.loc[count, 'favourite_count'] = tweet.favorite_count
-                df.loc[count, 'retweet_count'] = tweet.retweet_count
-                df.loc[count, 'tweet'] = tweet.full_text
-                count += 1
+    st.write(l1)
+    df = pd.DataFrame(columns = ['name', 'time', 'favourite_count', 'retweet_count', 'tweet'])
+    count = 0
+    for i in range(len(l1)):
+      posts = api.user_timeline(screen_name=l1[i], count=100, exclude_replies=True,lang="en", tweet_mode="extended")
+      for tweet in posts[:10]:
+        df.loc[count, 'name'] = l1[i]
+        df.loc[count, 'time'] = str(tweet.created_at)
+        df.loc[count, 'favourite_count'] = tweet.favorite_count
+        df.loc[count, 'retweet_count'] = tweet.retweet_count
+        df.loc[count, 'tweet'] = tweet.full_text
+        count += 1
 
 
 
