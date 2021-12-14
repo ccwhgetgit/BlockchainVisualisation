@@ -14,7 +14,7 @@ import tweepy
 
 
 st.title("Surfacing Data Points")
-page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
+page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "Twitter Verse"])
 if page == "NFT Marketplaces":
   
 
@@ -699,7 +699,7 @@ if page == "L1/L2 Network Activities":
     
     
 
-if page == "OpenSea Rarity":
+if page == "Twitter Verse":
 
     consumerKey =   'sXxEobwFV4b1oEaigeF6sUsAb'# confidential
     consumerSecret = '5R0I1UNItyvda96brk2aN3E1WMdoprbIpiVLTgoerOmDoOYTI7' # confidential
@@ -717,11 +717,11 @@ if page == "OpenSea Rarity":
 
 
     
-    st.title("Tweet Verse")
+    st.title("Twitter Verse")
 
-    raw_text = st.text_area("Enter the exact twitter handle (without @ and space) eg. defiMoon,Arthur_0x")
+    raw_text = st.text_area("Enter the exact twitter handle (without @ and space) eg. defiMoon,Arthur_0x,EnterDAO    Error if wrongly recorded")
     l1 = raw_text.split(',')
-
+    
     st.write(l1)
     df = pd.DataFrame(columns = ['name', 'time', 'favourite_count', 'retweet_count', 'tweet'])
     count = 0
@@ -734,9 +734,6 @@ if page == "OpenSea Rarity":
         df.loc[count, 'retweet_count'] = tweet.retweet_count
         df.loc[count, 'tweet'] = tweet.full_text
         count += 1
-
-
-
 
     st.write(df)
 
