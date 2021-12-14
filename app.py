@@ -10,6 +10,8 @@ from datetime import date
 import datetime
 import plotly.express as px
 from io import BytesIO
+import tweepy
+
 
 st.title("Surfacing Data Points")
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "OpenSea Rarity"])
@@ -699,44 +701,70 @@ if page == "L1/L2 Network Activities":
 
 if page == "OpenSea Rarity":
 
-    # to run streamlit run
-    collection = st.sidebar.text_input("Collection")
-    st.header(collection)
-    token = st.sidebar.text_input("Token")
-    count1 = st.sidebar.number_input("count")
+    consumerKey =   'sXxEobwFV4b1oEaigeF6sUsAb'# confidential
+    consumerSecret = '5R0I1UNItyvda96brk2aN3E1WMdoprbIpiVLTgoerOmDoOYTI7' # confidential
+    accessToken =  '1444264136666353667-iHg1KKdK6Zowd7SlbiHkGcclLLzZ6B'# confidential
+    accessTokenSecret = 'HzdZCnP8TBotJSGVo4L7fk644OTHR6AgjBImxcaYHKcnw' # confidential
 
-    params = {}
+    # Create the authentication object
+    authenticate = tweepy.OAuthHandler(consumerKey, consumerSecret)
 
-    if collection:
-        params['collection'] = collection
-    if token:
-        params['token_ids'] = token
+    # Set the access token and access token secret
+    authenticate.set_access_token(accessToken, accessTokenSecret)
 
-    try:
-        r = requests.get("https://api.opensea.io/api/v1/assets", params=params)
-    except:
-        st.write("You printed wrongly")
+    # Creating the API object while passing in auth information
+    api = tweepy.API(authenticate, wait_on_rate_limit=True)
 
-    response = r.json()
-    asset_list = []
-    try:
-        for asset in response["assets"]:
-            asset_rarity = 1
 
-            for trait in asset['traits']:
-                trait_rarity = trait['trait_count'] / count1
-                asset_rarity *= trait_rarity
+    def app():
+        st.title("Tweet Verse")
 
-                price = float(asset['sell_orders'][0]['base_price']) * 0.000000000000000001
+        raw_text = st.text_area("Enter the exact twitter handle (without @ and space) eg. defiMoon,Arthur_0x")
+        l1 = raw_text.split(',')
 
-            asset_rarity *= 10 ** 7
-            value = asset_rarity * price
-            asset_list.append([asset['token_id'], asset_rarity, price, value])
-            # findset_list.append(float(trait_count))
-        # columns=['rarity score', 'price'])
-        df = pd.DataFrame(asset_list, columns=['token_id', 'rarity score', 'price', 'value'])
-        st.write(df)
+        st.write(l1)
 
-    except:
-        st.write("Collection : pudgypenguins from https://opensea.io/collection/pudgypenguins\n")
-        st.write("Ensure token has not been bought before")
+        df = pd.DataFrame(columns = ['name', 'time', 'favourite_count', 'retweet_count', 'tweet'])
+        count = 0
+        for i in range(len(l1)):
+
+            posts = api.user_timeline(screen_name=l1[i], count=100, exclude_replies=True,lang="en", tweet_mode="extended")
+
+
+
+            for tweet in posts[:10]:
+                df.loc[count, 'name'] = l1[i]
+                df.loc[count, 'time'] = str(tweet.created_at)
+                df.loc[count, 'favourite_count'] = tweet.favorite_count
+                df.loc[count, 'retweet_count'] = tweet.retweet_count
+                df.loc[count, 'tweet'] = tweet.full_text
+                count += 1
+
+
+
+
+    st.write(df)
+
+    def to_excel(df):
+        output = BytesIO()
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Sheet1')
+        writer.save()
+        processed_data = output.getvalue()
+        return processed_data
+
+
+    def get_table_download_link(df):
+        """Generates a link allowing the data in a given panda dataframe to be downloaded
+        in:  dataframe
+        out: href string
+        """
+        val = to_excel(df)
+        b64 = base64.b64encode(val)  # val looks like b'...'
+        return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="Twitter.csv">Download csv file</a>'  # decode b'abc' => abc
+
+    st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+
+
+
+
