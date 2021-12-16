@@ -177,9 +177,28 @@ if page == "NFT Marketplaces":
     maximum = len(d)
     weekly = d.loc[ maximum - 7: maximum, :]
     
-    weekly
     
-    
+    def to_excel(df):
+        output = BytesIO()
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Sheet1')
+        writer.save()
+        processed_data = output.getvalue()
+        return processed_data
+
+
+    def get_table_download_link(df):
+        """Generates a link allowing the data in a given panda dataframe to be downloaded
+        in:  dataframe
+        out: href string
+        """
+        val = to_excel(df)
+        b64 = base64.b64encode(val)  # val looks like b'...'
+        return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="L1Networks.xlsx">Download csv file</a>'  # decode b'abc' => abc
+
+
+    df = d  # your dataframe
+    st.markdown(get_table_download_link(df), unsafe_allow_html=True)
     
     st.line_chart(df)
 
