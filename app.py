@@ -232,13 +232,6 @@ if page == "NFT Marketplaces":
             number = ''
             count += 1
             history -=1
-     def to_excel(df):
-        output = BytesIO()
-        writer = pd.ExcelWriter(output, engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Sheet1')
-        writer.save()
-        processed_data = output.getvalue()
-        return processed_data
 
 
     def get_table_download_link(df):
