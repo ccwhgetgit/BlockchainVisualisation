@@ -244,7 +244,9 @@ if page == "NFT Marketplaces":
 
 
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
-    
+    st.title("Gods Unchained Unique Players")
+    st.write("Past 2 months")
+    df
     st.line_chart(df)
     
 
