@@ -70,7 +70,7 @@ if page == "NFT Marketplaces":
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    st.title('Vulcan Forged User Growth')
+    st.title('Vulcan Forged Unique Players')
     d = pd.DataFrame(columns = ['ForgedArena','Berserk', 'VulcanVerse'])
     driver.get('https://dappradar.com/v2/api/dapp/vulcanforged/games/forge-arena/chart/all?currency=USD')  
     page_source = driver.page_source
