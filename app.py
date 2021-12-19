@@ -7,6 +7,7 @@ import base64
 import pandas as pd
 import time
 from datetime import date
+from datetime import datetime, timedelta
 import datetime
 import plotly.express as px
 from io import BytesIO
@@ -194,13 +195,67 @@ if page == "NFT Marketplaces":
         """
         val = to_excel(df)
         b64 = base64.b64encode(val)  # val looks like b'...'
-        return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="L1Networks.xlsx">Download csv file</a>'  # decode b'abc' => abc
+        return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="VulcanVerse.xlsx">Download csv file</a>'  # decode b'abc' => abc
 
 
     df = d  # your dataframe
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
     
     st.line_chart(df)
+    
+    
+    
+    url="https://cardsunchained.com/?pstat=1"
+
+    # Make a GET request to fetch the raw HTML content
+    html_content = requests.get(url).text
+
+    # Parse the html content
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+
+
+
+    start = a.find('data:')
+    l = a[start:].split()[16:17]
+    df = pd.DataFrame(columns = ['date','uniqueplayers'])
+    count = 0
+    number = ''
+    l = str(l)[2:-1]
+    history = 60 
+    for i in range(len(l)): 
+        if l[i].isdigit(): 
+            number += l[i]
+        else: 
+            df.loc[count, 'uniqueplayers'] = number 
+            df.loc[count, 'date'] =str(datetime.now()     - timedelta(days=history))[:10]
+            number = ''
+            count += 1
+            history -=1
+     def to_excel(df):
+        output = BytesIO()
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Sheet1')
+        writer.save()
+        processed_data = output.getvalue()
+        return processed_data
+
+
+    def get_table_download_link(df):
+        """Generates a link allowing the data in a given panda dataframe to be downloaded
+        in:  dataframe
+        out: href string
+        """
+        val = to_excel(df)
+        b64 = base64.b64encode(val)  # val looks like b'...'
+        return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="GodsUnchained.xlsx">Download csv file</a>'  # decode b'abc' => abc
+
+
+    st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+    
+    st.line_chart(df)
+    
+
 
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
