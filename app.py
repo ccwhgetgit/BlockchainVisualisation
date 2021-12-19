@@ -226,7 +226,7 @@ if page == "NFT Marketplaces":
         if l[i].isdigit(): 
             number += l[i]
         else: 
-            df.loc[count, 'uniqueplayers'] = number 
+            df.loc[count, 'uniqueplayers'] = int(number) 
             df.loc[count, 'date'] =str(datetime.now()     - timedelta(days=history))[:10]
             number = ''
             count += 1
