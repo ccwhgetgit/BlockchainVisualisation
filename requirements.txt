@@ -7,3 +7,5 @@ xlsxwriter
 datetime
 plotly.express
 tweepy
+nltk
+textblob
