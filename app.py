@@ -14,7 +14,9 @@ import tweepy
 
 
 st.title("Surfacing Data Points")
-page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "Twitter Verse"])
+page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "Twitter Verse", "Newsroom"])
+
+
 if page == "NFT Marketplaces":
   
 
@@ -828,3 +830,26 @@ if page == "Twitter Verse":
 
 
 
+if page == "Newsroom":
+    st.title("Newsroom")
+    raw_text = 'ElrondNetwork, avalancheavax, terra_money, Algorand, Polkadot, TheDopeWars, SIPHERxyz, Immutable'
+    l1 = raw_text.split(',')
+
+    df = pd.DataFrame(columns=['name', 'time', 'tweet'])
+    count = 0
+    for i in range(len(l1)):
+        posts = api.user_timeline(screen_name=l1[i], count=100, exclude_replies=True, lang="en", tweet_mode="extended")
+        for tweet in posts[:10]:
+            df.loc[count, 'name'] = l1[i]
+            df.loc[count, 'time'] = str(tweet.created_at)[:19]
+            df.loc[count, 'tweet'] = tweet.full_text
+            count += 1
+    df1 = df.sort_values(by='time', ascending=False)
+    df1 = df1.reset_index()
+    df1 = df1.drop(columns='index')
+
+
+    for i in range(len(df1)):
+        st.write(df1.loc[i,:'time'])
+        string = df1.loc[i, 'tweet']
+        st.write(string)
