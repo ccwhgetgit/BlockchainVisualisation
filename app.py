@@ -11,7 +11,21 @@ from datetime import datetime, timedelta
 import plotly.express as px
 from io import BytesIO
 import tweepy
-
+from PIL import Image
+import PIL
+import io
+import requests
+import sys
+import tweepy
+import pandas as pd
+import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
+from wordcloud import WordCloud
+from textblob import TextBlob
+import re
 
 st.title("Surfacing Data Points")
 page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Marketplaces", "Twitter Verse", "Newsroom"])
@@ -785,14 +799,116 @@ if page == "Twitter Verse":
     # Creating the API object while passing in auth information
     api = tweepy.API(authenticate, wait_on_rate_limit=True)
 
+    
+    consumer_key =   'sXxEobwFV4b1oEaigeF6sUsAb'# confidential
+    consumer_secret = '5R0I1UNItyvda96brk2aN3E1WMdoprbIpiVLTgoerOmDoOYTI7' # confidential
+    access_token =  '1444264136666353667-iHg1KKdK6Zowd7SlbiHkGcclLLzZ6B'# confidential
+    access_token_secret = 'HzdZCnP8TBotJSGVo4L7fk644OTHR6AgjBImxcaYHKcnw' # confidential
+
+    # creating the authentication object, setting access token and creating the api object
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth, wait_on_rate_limit=True)
+
+
+    ####################################################################################
+    #                         Function to retrieve the tweets                          #
+    ####################################################################################
+
+
+    def get_tweets(user_name, tweet_count):
+        tweets_list = []
+        img_url = ""
+        name = ""
+
+        for tweet in api.user_timeline(
+            id=user_name, count=100, tweet_mode="extended"
+        ):
+            tweets_dict = {}
+
+            tweets_dict["tweet"] = tweet.full_text
+
+            tweets_list.append(tweets_dict)
+
+        return tweets_list
+
+
+    ####################################################################################
+    #       Function to prepare the data for word cloud and sentiment analysis         #
+    ####################################################################################
+
+    extra_stopwords = ["The", "It", "it"]
+
+
+    def prep_data(tweet):
+        # cleaning the data
+        tweet = re.sub("https?:\/\/\S+", "", tweet)  # replacing url with domain name
+        tweet = re.sub("#[A-Za-z0–9]+", " ", tweet)  # removing #mentions
+        tweet = re.sub("#", " ", tweet)  # removing hash tag
+        tweet = re.sub("\n", " ", tweet)  # removing \n
+        tweet = re.sub("@[A-Za-z0–9]+", "", tweet)  # removing @mentions
+        tweet = re.sub("RT", "", tweet)  # removing RT
+        tweet = re.sub("^[a-zA-Z]{1,2}$", "", tweet)  # removing 1-2 char long words
+        tweet = re.sub("\w*\d\w*", "", tweet)  # removing words containing digits
+        for word in extra_stopwords:
+            tweet = tweet.replace(word, "")
+
+        # lemmitizing
+        lemmatizer = WordNetLemmatizer()
+        new_s = ""
+        for word in tweet.split(" "):
+           new_s += word
+
+        return new_s
+
+
+    ####################################################################################
+    #           Function to create the word cloud based on tweets data                 #
+    ####################################################################################
+
+
+    def wordcloud(clean_tweet):
+        wordcloud_words = " ".join(clean_tweet)
+        wordcloud = WordCloud(
+            height=300, width=500, background_color="white", random_state=500,
+        ).generate(wordcloud_words)
+        plt.imshow(wordcloud, interpolation="bilinear")
+        plt.axis("off")
+        plt.savefig("cloud.jpg")
+        img = Image.open("cloud.jpg")
+        return img
+
+
+
+
+    #####################################################################################
+    #                                  Main App                                         #
+    #####################################################################################
 
     
     st.title("Twitter Verse")
 
     raw_text = st.text_area("Enter the exact twitter handle (without @ and space) eg. defiMoon,Arthur_0x,EnterDAO    Error if wrongly recorded")
     l1 = raw_text.split(',')
-    
-    st.write(l1)
+    tweet_df = pd.DataFrame(columns=[ 'tweet'])
+    count = 0
+    for i in range(len(l1)):
+        posts = api.user_timeline(screen_name=l1[i], count=100, exclude_replies=True, lang="en", tweet_mode="extended")
+        for tweet in posts[:100]:
+
+            tweet_df.loc[count, 'tweet'] = tweet.full_text
+            count += 1
+
+    st.write(tweet_df)
+
+            # calling the function to prep the data
+    tweet_df["clean_tweet"] = tweet_df["tweet"].apply(prep_data)
+
+            # calling the function to create the word cloud
+    img = wordcloud(tweet_df["clean_tweet"])
+
+    st.image(img)
+   
     df = pd.DataFrame(columns = ['name', 'time', 'favourite_count', 'retweet_count', 'tweet'])
     count = 0
     for i in range(len(l1)):
@@ -806,7 +922,7 @@ if page == "Twitter Verse":
         count += 1
 
     st.write(df)
-
+    
     def to_excel(df):
         output = BytesIO()
         writer = pd.ExcelWriter(output, engine='xlsxwriter')
