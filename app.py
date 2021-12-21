@@ -898,8 +898,6 @@ if page == "Twitter Verse":
             tweet_df.loc[count, 'tweet'] = tweet.full_text
             count += 1
 
-    st.write(tweet_df)
-
             # calling the function to prep the data
     tweet_df["clean_tweet"] = tweet_df["tweet"].apply(prep_data)
 
