@@ -18,8 +18,7 @@ import requests
 import sys
 import tweepy
 import pandas as pd
-import matplotlib.pyplot as plt
-import plotly.graph_objects as go
+
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
