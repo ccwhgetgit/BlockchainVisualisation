@@ -831,6 +831,19 @@ if page == "Twitter Verse":
 
 
 if page == "Newsroom":
+    consumerKey =   'sXxEobwFV4b1oEaigeF6sUsAb'# confidential
+    consumerSecret = '5R0I1UNItyvda96brk2aN3E1WMdoprbIpiVLTgoerOmDoOYTI7' # confidential
+    accessToken =  '1444264136666353667-iHg1KKdK6Zowd7SlbiHkGcclLLzZ6B'# confidential
+    accessTokenSecret = 'HzdZCnP8TBotJSGVo4L7fk644OTHR6AgjBImxcaYHKcnw' # confidential
+
+    # Create the authentication object
+    authenticate = tweepy.OAuthHandler(consumerKey, consumerSecret)
+
+    # Set the access token and access token secret
+    authenticate.set_access_token(accessToken, accessTokenSecret)
+
+    # Creating the API object while passing in auth information
+    api = tweepy.API(authenticate, wait_on_rate_limit=True)
     st.title("Newsroom")
     raw_text = 'ElrondNetwork, avalancheavax, terra_money, Algorand, Polkadot, TheDopeWars, SIPHERxyz, Immutable'
     l1 = raw_text.split(',')
