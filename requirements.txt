@@ -7,5 +7,5 @@ xlsxwriter
 datetime
 plotly.express
 tweepy
-nltk
+nltk==3.5
 textblob
