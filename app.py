@@ -176,7 +176,7 @@ if page == "NFT Marketplaces":
     st.write('Over the past week:')
     maximum = len(d)
     weekly = d.loc[ maximum - 7: maximum, :]
-    
+    weekly
     
     def to_excel(df):
         output = BytesIO()
