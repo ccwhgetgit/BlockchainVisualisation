@@ -9,3 +9,4 @@ plotly.express
 tweepy
 nltk>=3.6.4
 textblob
+wordcloud
