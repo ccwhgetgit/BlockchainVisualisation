@@ -229,7 +229,7 @@ if page == "L1/L2 Network Activities":
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
-        columns=['blocktime', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime', 'terranewaddress',  'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -597,10 +597,29 @@ if page == "L1/L2 Network Activities":
             count += 1
     count = 0
     
-    
+
+    #For Terra#
+    url = "https://api.flipsidecrypto.com/api/v2/queries/11c0b81d-514e-4ff5-9fc7-9ebcd731ca8e/data/latest"
+    html_content = requests.get(url).text
+    soup = BeautifulSoup(html_content, "html.parser")
         #stops here
 
+        a = soup.prettify()
+    start = a.find(history)
+    a = a[start:].split("DATE")
+    count = 1
+    total = 0
+    for i in range(len(a)):
+        l = a[i][20:]
+        sa = ""
+        for k in range(len(l)):
+            if l[k].isdigit():
+                sa += l[k]
+        d.loc[count, 'terranewaddress'] = int(sa)
+        count += 1
     
+          
+          
     d= d.drop(index = 0 )
     d = d.drop(index = 1)
     d = d.drop(index = 2)
