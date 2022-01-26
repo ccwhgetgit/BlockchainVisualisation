@@ -60,6 +60,7 @@ if page == "NFT Marketplaces":
     number = 0 
     usergrowth = []
     count = 0 
+    s = ""
     for i in range(len(l1)): 
         number = 0 
         if l1[i].isdigit(): 
