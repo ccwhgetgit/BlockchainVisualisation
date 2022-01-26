@@ -604,7 +604,7 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
         #stops here
 
-        a = soup.prettify()
+    a = soup.prettify()
     start = a.find(history)
     a = a[start:].split("DATE")
     count = 1
