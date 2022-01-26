@@ -33,49 +33,6 @@ page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Market
 if page == "NFT Marketplaces":
   
 
-'''
-    st.write('IMX : https://immutascan.io/address/0xacb3c6a43d15b907e8433077b6d38ae40936fe2c?tab=0')
-    
-    st.title('Terra NFT : Random Earth + Knowhere Marketplace')
-    url="https://api.flipsidecrypto.com/api/v2/queries/b6a4f795-12eb-4d7c-b76d-ba3af5b6eaac/data/latest"
-
-    # Make a GET request to fetch the raw HTML content
-    html_content = requests.get(url).text
-
-    # Parse the html content
-    soup = BeautifulSoup(html_content, "html.parser")
-    a = soup.prettify()
-    a = a.split("Project Name")
-    d = pd.DataFrame(columns = ['project','total vol (in LUNA)'])
-    count = 0 
-    total = 0 
-    for i in range(1, len(a)): 
-        l = a[i] 
-        stop = l.find(',')
-        name = l[3:stop-1]
-        d.loc[count, 'project'] = name
-
-        vol = l.find('LUNA')
-        end = l.find(',{')
-        sales = l[vol +7:end -1 ]
-        s =""
-        for j in range(len(sales)):
-            if sales[j].isdigit():
-                s += sales[j]
-            if sales[j] == '.':
-                break
-        d.loc[count, 'total vol (in LUNA)'] = int(s)
-        count += 1
-    d
-    
-    number = str(len(d))
-    st.write("Number of NFT Projects on Terra = " + number)
-    st.write("Total sales volume (LUNA): " + str(d['total vol (in LUNA)'].sum(axis = 0)) )
-    st.write("**NFT Projects on Terra**")
-    
-    st.bar_chart(d[['project', 'total vol (in LUNA)']])
-'''
-    
     import pandas as pd
     from selenium import webdriver
     import os
@@ -271,7 +228,7 @@ if page == "L1/L2 Network Activities":
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
-        columns=['blocktime', 'ethtxnactivity','terratxnactivity','terranewaddress', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -640,45 +597,6 @@ if page == "L1/L2 Network Activities":
     count = 0
     
     
-    #terra
-    '''
-    url = "https://api.flipsidecrypto.com/api/v2/queries/791a0a78-6b93-4ed2-824b-435acbea5bc7/data/latest"
-    html_content = requests.get(url).text
-    soup = BeautifulSoup(html_content, "html.parser")
-    a = soup.prettify()
-
-    start = a.find(history)
-    a = a[start:].split("MONTH")
-    count = 1
-    total = 0
-    for i in range(len(a)):
-        l = a[i][20:]
-        sa = ""
-        for k in range(len(l)):
-            if l[k].isdigit():
-                sa += l[k]
-        d.loc[count, 'terratxnactivity'] = int(sa)
-        count += 1
-
-    url = "https://api.flipsidecrypto.com/api/v2/queries/1dbf29af-f3fa-4c55-aaba-a2568df750b8/data/latest"
-    html_content = requests.get(url).text
-    soup = BeautifulSoup(html_content, "html.parser")
-    a = soup.prettify()
-    start = a.find(history)
-    a = a[start:].split("DATE")
-    count = 1
-    total = 0
-    for i in range(len(a)):
-        l = a[i][30:]
-        sa = ""
-        for k in range(len(l)):
-            if l[k].isdigit():
-                sa += l[k]
-            if l[k] == "}":
-                break
-        d.loc[count, 'terranewaddress'] = int(sa)
-        count += 1
-    '''
         #stops here
 #etherscan
 
