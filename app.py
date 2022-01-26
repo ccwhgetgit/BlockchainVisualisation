@@ -33,7 +33,7 @@ page = st.selectbox("Choose your page", ["L1/L2 Network Activities", "NFT Market
 if page == "NFT Marketplaces":
   
 
-  
+'''
     st.write('IMX : https://immutascan.io/address/0xacb3c6a43d15b907e8433077b6d38ae40936fe2c?tab=0')
     
     st.title('Terra NFT : Random Earth + Knowhere Marketplace')
@@ -74,7 +74,7 @@ if page == "NFT Marketplaces":
     st.write("**NFT Projects on Terra**")
     
     st.bar_chart(d[['project', 'total vol (in LUNA)']])
-
+'''
     
     import pandas as pd
     from selenium import webdriver
@@ -641,6 +641,7 @@ if page == "L1/L2 Network Activities":
     
     
     #terra
+    '''
     url = "https://api.flipsidecrypto.com/api/v2/queries/791a0a78-6b93-4ed2-824b-435acbea5bc7/data/latest"
     html_content = requests.get(url).text
     soup = BeautifulSoup(html_content, "html.parser")
@@ -677,7 +678,7 @@ if page == "L1/L2 Network Activities":
                 break
         d.loc[count, 'terranewaddress'] = int(sa)
         count += 1
-    
+    '''
         #stops here
 #etherscan
 
