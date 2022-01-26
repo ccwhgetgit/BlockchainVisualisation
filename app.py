@@ -598,26 +598,7 @@ if page == "L1/L2 Network Activities":
     
     
         #stops here
-#etherscan
 
-    url = "https://api.flipsidecrypto.com/api/v2/queries/bc3f3177-a40c-4f05-ad2f-5137937a5a2c/data/latest"
-    html_content = requests.get(url).text
-    soup = BeautifulSoup(html_content, "html.parser")
-    a = soup.prettify()
-    start = a.find(history)
-    a = a[start:].split("MONTH")
-    count = 1
-    total = 0
-    for i in range(len(a)):
-        l = a[i][20:]
-        sa = ""
-        for k in range(len(l)):
-            if l[k].isdigit():
-                sa += l[k]
-        d.loc[count, 'ethtxnactivity'] = int(sa)
-        count += 1
-    
-    
     
     d= d.drop(index = 0 )
     d = d.drop(index = 1)
