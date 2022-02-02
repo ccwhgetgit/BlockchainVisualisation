@@ -640,22 +640,7 @@ if page == "L1/L2 Network Activities":
     d = d.dropna()
     index = d['blocktime']
     
-    
-    st.write("**Past 2 Weeks**")
-    
-    st.write("New Addresses")
-    df = d [[ 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
-            'algorandnewaddress']].dropna()
-    df = df.set_index(index)
-    
-    st.line_chart(df[77:])
-    
-    st.write("Txn Activity")
-    df =  d [['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
-            'algorandtxnactivity']].dropna()
-    df = df.set_index(index)
  
-    st.line_chart(df[77:])
     
     
     st.write("**From** " + hist)
