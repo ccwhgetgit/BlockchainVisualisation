@@ -227,12 +227,12 @@ if page == "NFT Marketplaces":
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
 
-    st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
+    st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum, ATOM")
     d = pd.DataFrame(
         columns=['blocktime',  'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
-                 'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
+                 'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress', 'atomtxnactivity'])
     st.write("Today's date: " + str(date.today()) )
     history = date.today() - pd.DateOffset(months=3)
     st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers**" )
@@ -601,7 +601,24 @@ if page == "L1/L2 Network Activities":
     #For Terra#
 
           
-          
+    #ATOM txn activity
+    from datetime import date
+    import datetime
+    import json
+    url="https://api.cosmoscan.net/operations/count/agg?by=day&from=1638662400&to=1643846400"
+
+    # Make a GET request to fetch the raw HTML content
+    html_content = requests.get(url).text
+
+    # Parse the html content
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+    a = json.loads(a)
+    df = pd.DataFrame(a)
+    i = 0 
+    for j in range(30, len(df)):
+        d.loc[j, 'cosmostxnactivity'] = int(df.loc[i, 'value'])
+        
     d= d.drop(index = 0 )
     d = d.drop(index = 1)
     d = d.drop(index = 2)
@@ -651,7 +668,7 @@ if page == "L1/L2 Network Activities":
     st.line_chart(df)
 
     df = d[['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
-            'algorandtxnactivity']].dropna()
+            'algorandtxnactivity', 'cosmostxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Txn Activity")
     st.line_chart(df)
@@ -662,7 +679,7 @@ if page == "L1/L2 Network Activities":
     st.write("New Addresses")
     st.line_chart(df)
 
-    df = d[['ethtxnactivity', 'terratxnactivity','arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
+    df = d[['ethtxnactivity', 'terratxnactivity','arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity', 'cosmostxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Txn Activity")
     st.line_chart(df)
