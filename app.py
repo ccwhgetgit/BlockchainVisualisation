@@ -646,7 +646,10 @@ if page == "L1/L2 Network Activities":
     for i in range(1, len(cols)): 
       col = cols[i]
       df[col] = np.log10(df[col].astype(float)) 
-             
+    
+    df
+    
+    
     st.write("All scales are log10")
     
     st.write("**From** " + hist)
