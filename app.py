@@ -642,7 +642,11 @@ if page == "L1/L2 Network Activities":
     index = d['blocktime']
     
  
-    
+    cols = df.columns
+    for i in range(1, len(cols)): 
+      col = cols[i]
+      df[col] = df[col].astype(float) 
+             
     st.write("All scales are log10")
     
     st.write("**From** " + hist)
