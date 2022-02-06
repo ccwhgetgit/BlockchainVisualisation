@@ -648,32 +648,35 @@ if page == "L1/L2 Network Activities":
     st.write("**From** " + hist)
     df = d[[ 'polynewaddress', 'arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress',
             'algorandnewaddress']].dropna()
-    df = df.set_index(index)
     df1 = df
     df1 = np.log10(df)
+    df1 = df1.set_index(index)
     st.write("New Addresses")
     st.line_chart(df1)
 
-    df = d[['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
+    df = d[['ethtxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
             'algorandtxnactivity']].dropna()
-    df = df.set_index(index)
+   
     df1 = df
     df1 = np.log10(df)
+    df1 = df1.set_index(index)
     st.write("Txn Activity")
     st.line_chart(df1)
 
     st.write("**Without Polygon**")
     df = d[['arbinewaddress', 'avanewaddress', 'ftmnewaddress', 'elrondnewaddress', 'algorandnewaddress']].dropna()
-    df = df.set_index(index)
+   
     df1 = df
     df1 = np.log10(df)
+    df1 = df1.set_index(index)
     st.write("New Addresses")
     st.line_chart(df1)
 
-    df = d[['ethtxnactivity', 'terratxnactivity','arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity', ]].dropna()
-    df = df.set_index(index)
+    df = d[['ethtxnactivity','arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity', ]].dropna()
+   
     df1 = df
     df1 = np.log10(df)
+    df1 = df1.set_index(index)
     st.write("Txn Activity")
     st.line_chart(df1)
     
