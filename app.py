@@ -655,7 +655,7 @@ if page == "L1/L2 Network Activities":
 
     df = df.set_index(index)
     st.write("New Addresses")
-    st.line_chart(df1)
+    st.line_chart(df)
 
     df = d[['ethtxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
             'algorandtxnactivity']].dropna()
