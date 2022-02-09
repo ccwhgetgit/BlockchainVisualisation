@@ -109,6 +109,9 @@ if page == "NFT Marketplaces":
 
 if page == "L1/L2 Network Activities":
     st.title("L1/2 Network")
+    
+    def num_there(s):
+      return any(i.isdigit() for i in s)
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
