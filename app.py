@@ -122,7 +122,7 @@ if page == "L1/L2 Network Activities":
     st.write("Today's date: " + str(date.today()) )
     history = date.today() - pd.DateOffset(months=3)
     st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers**" )
-    st.write("Delay of up to 1 day")
+    st.write("Delay of up to 1 day. Solana txn records NaN as the data was only available recently, hence previous records are unavailable")
    
     history = str(history)[:10]
     url = "https://snowtrace.io/chart/tx"
