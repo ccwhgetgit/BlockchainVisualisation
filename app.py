@@ -557,7 +557,7 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
     a = list(a.split('TX_ID'))
-    count = 0 
+    count = 30 #since only start from 1 month ago 
 
     for i in range(len(a)): 
         l = a[i]
