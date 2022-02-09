@@ -115,7 +115,7 @@ if page == "L1/L2 Network Activities":
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum, Solana")
     d = pd.DataFrame(
-        columns=['blocktime',  'ethtxnactivity', 'solanatxnactivity', 'terratxnactivity', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime',  'ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -123,7 +123,7 @@ if page == "L1/L2 Network Activities":
     history = date.today() - pd.DateOffset(months=3)
     st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers**" )
     st.write("Delay of up to 1 day. Solana txn records NaN as the data was only available recently, hence previous records are unavailable")
-   
+    st.write("Temporary Solana Query: https://app.flipsidecrypto.com/velocity/queries/ca8e74d7-7dd1-459a-aba4-1663f075c686 ")
     history = str(history)[:10]
     url = "https://snowtrace.io/chart/tx"
 
@@ -552,34 +552,6 @@ if page == "L1/L2 Network Activities":
 
           
     #Solana txn activity
-    url = "https://api.flipsidecrypto.com/api/v2/queries/ca8e74d7-7dd1-459a-aba4-1663f075c686/data/latest"
-    html_content = requests.get(url).text
-    soup = BeautifulSoup(html_content, "html.parser")
-    a = soup.prettify()
-    a = list(a.split('TX_ID'))
-    count = 30 #since only start from 1 month ago 
-
-    for i in range(len(a)): 
-        l = a[i]
-        value = ""
-        value1 = ""
-        for j in range(len(l)): 
-            if l[j].isdigit(): 
-                value += l[j]
-            if l[j] =="D": 
-                break 
-        if num_there(value) == False: 
-            continue 
-        else: 
-            for k in range(len(value)): 
-                if value[k].isdigit(): 
-                    value1 += value[k]
-                else: 
-                    value1 = 0 
-            value1 = int(value1) 
-            d.loc[count, 'solanatxnactivity'] = value1
-            count += 1
-            
     d= d.drop(index = 0 )
     d = d.drop(index = 1)
     d = d.drop(index = 2)
@@ -635,7 +607,7 @@ if page == "L1/L2 Network Activities":
     st.write("New Addresses")
     st.line_chart(df)
 
-    df = d[['ethtxnactivity', 'solanatxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
+    df = d[['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
             'algorandtxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Txn Activity")
@@ -648,7 +620,7 @@ if page == "L1/L2 Network Activities":
     st.write("New Addresses")
     st.line_chart(df)
 
-    df = d[['ethtxnactivity', 'solanatxnactivity', 'terratxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
+    df = d[['ethtxnactivity', 'terratxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
    
     df = df.set_index(index)
     st.write("Txn Activity")
