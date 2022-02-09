@@ -44,6 +44,20 @@ if page == "NFT Marketplaces":
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     page_source = driver.page_source
     from bs4 import BeautifulSoup
+
+    def to_excel(df):
+      output = BytesIO()
+      writer = pd.ExcelWriter(output, engine='xlsxwriter')
+      df.to_excel(writer, sheet_name='Sheet1')
+      writer.save()
+      processed_data = output.getvalue()
+      return processed_data
+    
+    def get_table_download_link(df):
+      val = to_excel(df)
+      b64 = base64.b64encode(val)  # val looks like b'...'
+      return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="VulcanVerse.xlsx">Download csv file</a>'  # decode b'abc' => abc
+
    
     
     url="https://cardsunchained.com/?pstat=1"
