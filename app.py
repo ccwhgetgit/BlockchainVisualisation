@@ -235,25 +235,37 @@ if page == "L1/L2 Network Activities":
             count += 1
 
     # etherum
-    
-    
     url = "https://api.flipsidecrypto.com/api/v2/queries/404c5a56-0cca-483c-89ea-3f83aa84ee92/data/latest"
     html_content = requests.get(url).text
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
     a = list(a.split('TX_ID'))
     count = 0 
+
     for i in range(len(a)): 
         l = a[i]
         value = ""
+        value1 = ""
         for j in range(len(l)): 
             if l[j].isdigit(): 
                 value += l[j]
             if l[j] =="D": 
                 break 
-        d.loc[count, 'ethtxnactivity'] = int(value)
-        count += 1
+        if num_there(value) == False: 
+            continue 
+        else: 
+            for k in range(len(value)): 
+                if value[k].isdigit(): 
+                    value1 += value[k]
+                else: 
+                    value1 = 0 
+            value1 = int(value1) 
+            d.loc[count, 'ethtxnactivity'] = value1
+            count += 1
+   
     
+    
+
     
     
     # elrond
