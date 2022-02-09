@@ -115,7 +115,7 @@ if page == "L1/L2 Network Activities":
 
     st.write("Networks supported: Ethereum, Terra, Avalanche, Algorand, Fantom, Elrond, Polygon, Arbitrum")
     d = pd.DataFrame(
-        columns=['blocktime',  'ethtxnactivity', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
+        columns=['blocktime',  'ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'polynewaddress', 'arbitxnactivity',
                  'arbinewaddress', 'avatxnactivity', 'avanewaddress', 'ftmtxnactivity', 'ftmnewaddress',
                  'elrondtxnactivity',
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
@@ -520,6 +520,35 @@ if page == "L1/L2 Network Activities":
     
 
     #For Terra#
+    #for terra
+
+    url = "https://api.flipsidecrypto.com/api/v2/queries/4e397c3b-deb0-4b61-af8f-2e203c59a668/data/latest"
+    html_content = requests.get(url).text
+    soup = BeautifulSoup(html_content, "html.parser")
+    a = soup.prettify()
+    a = list(a.split('TX_ID'))
+    count = 0 
+
+    for i in range(len(a)): 
+        l = a[i]
+        value = ""
+        value1 = ""
+        for j in range(len(l)): 
+            if l[j].isdigit(): 
+                value += l[j]
+            if l[j] =="D": 
+                break 
+        if num_there(value) == False: 
+            continue 
+        else: 
+            for k in range(len(value)): 
+                if value[k].isdigit(): 
+                    value1 += value[k]
+                else: 
+                    value1 = 0 
+            value1 = int(value1) 
+            d.loc[count, 'terratxnactivity'] = value1
+            count += 1
 
           
     #ATOM txn activity
@@ -579,7 +608,7 @@ if page == "L1/L2 Network Activities":
     st.write("New Addresses")
     st.line_chart(df)
 
-    df = d[['ethtxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
+    df = d[['ethtxnactivity', 'terratxnactivity', 'polytxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity',
             'algorandtxnactivity']].dropna()
     df = df.set_index(index)
     st.write("Txn Activity")
@@ -592,7 +621,7 @@ if page == "L1/L2 Network Activities":
     st.write("New Addresses")
     st.line_chart(df)
 
-    df = d[['ethtxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
+    df = d[['ethtxnactivity', 'terratxnactivity', 'arbitxnactivity', 'avatxnactivity', 'ftmtxnactivity', 'elrondtxnactivity', 'algorandtxnactivity']].dropna()
    
     df = df.set_index(index)
     st.write("Txn Activity")
