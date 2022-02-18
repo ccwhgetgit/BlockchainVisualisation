@@ -121,9 +121,8 @@ if page == "L1/L2 Network Activities":
                  'elrondnewaddress', 'algorandtxnactivity', 'algorandnewaddress'])
     st.write("Today's date: " + str(date.today()) )
     history = date.today() - pd.DateOffset(months=3)
-    st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers**" )
-    st.write("Delay of up to 1 day. Solana txn records NaN as the data was only available recently, hence previous records are unavailable")
-    st.write("Temporary Solana Query: https://app.flipsidecrypto.com/velocity/queries/ca8e74d7-7dd1-459a-aba4-1663f075c686 ")
+    st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers, FlipsideCrypto**" )
+    st.write("Delay of up to 1 day. Solana, Harmony txn records NaN as the data was only available recently, hence previous records are unavailable. But gradually filled up as time passes")
     history = str(history)[:10]
     url = "https://snowtrace.io/chart/tx"
 
