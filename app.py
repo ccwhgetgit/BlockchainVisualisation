@@ -122,7 +122,7 @@ if page == "L1/L2 Network Activities":
     st.write("Today's date: " + str(date.today()) )
     history = date.today() - pd.DateOffset(months=3)
     st.write("Dataset follows a 3 month window. **Live Data Feeds from Explorers, FlipsideCrypto**" )
-    st.write("Delay of up to 1 day. Solana, Harmony txn records NaN as the data was only available recently, hence previous records are unavailable. But gradually filled up as time passes")
+    st.write("Delay of up to 1 day. Solana txn records NaN due to the lack of historical data")
     history = str(history)[:10]
     url = "https://snowtrace.io/chart/tx"
 
@@ -553,7 +553,7 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
     a = list(a.split('TX_ID'))
-    count = 0 
+    count = 92 - len(a) + 1 
     for i in range(len(a)): 
         l = a[i]
         value = ""
