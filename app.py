@@ -553,7 +553,7 @@ if page == "L1/L2 Network Activities":
     soup = BeautifulSoup(html_content, "html.parser")
     a = soup.prettify()
     a = list(a.split('TX_ID'))
-    count = 92 - len(a) + 1
+    count = 0 
     for i in range(len(a)): 
         l = a[i]
         value = ""
